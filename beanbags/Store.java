@@ -176,6 +176,10 @@ public class Store implements BeanBagStore
 
         BeanBag bag = findBeanBag(id);
 
+        if (bag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+
         if (!bag.inStock()) {
             throw new BeanBagNotInStockException();
         }
@@ -187,6 +191,7 @@ public class Store implements BeanBagStore
         if (!bag.hasPrice()) {
             throw new PriceNotSetException();
         }
+
     }
 
     /**

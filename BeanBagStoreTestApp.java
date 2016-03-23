@@ -329,7 +329,22 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         }
 
-        completeTest();        
+        completeTest();
+
+
+        /*  .sellBeanBags() - ID not recognised
+        **********************************************************************/
+        try {
+            store.sellBeanBags(1, "1000000");
+            assert false : "Sale should have thrown error";
+        }
+        catch (BeanBagIDNotRecognisedException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
     }
 
     public static void TestBeanBags() {
