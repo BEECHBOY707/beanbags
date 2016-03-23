@@ -162,6 +162,23 @@ public class BeanBagStoreTestApp
         } 
 
         completeTest();
+
+
+        /*  .reserveBeanBags() - reserve non-existent bag
+        **********************************************************************/
+        bag.setStockCount(10);
+
+        try {
+            store.reserveBeanBags(100, "1234567890ABCDEF");
+            assert false : "Reservation should have thrown error";
+        }
+        catch (BeanBagIDNotRecognisedException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        } 
+
+        completeTest();        
     }
 
     public static void TestBeanBags() {

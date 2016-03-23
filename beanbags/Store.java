@@ -158,6 +158,10 @@ public class Store implements BeanBagStore
 
         BeanBag beanbag = this.findBeanBag(id);
 
+        if (beanbag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+
         if (!beanbag.inStock()) {
             throw new BeanBagNotInStockException();
         }
