@@ -17,6 +17,24 @@ public class Store implements BeanBagStore
         this.beanBags = new ObjectArrayList();    
     }
     
+    /**
+     * Retrieve a BeanBag object from Storage based on ID
+     * 
+     * @param id    bean bag ID to search for
+     */
+    public BeanBag getBeanBag(String id) {
+        // Iterate BeanBag array searching for the ID
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            if (bag.getId() == id) {
+                return bag;
+            }
+        }
+        
+        // ID not found
+        return null;
+    }
+
     public void addBeanBags(int num, String manufacturer, String name, 
     String id, short year, byte month)
     throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException,
