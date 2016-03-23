@@ -42,7 +42,7 @@ public class BeanBagStoreTestApp
 
 
         /*  .addBeanBags() - add valid bean bag
-        ***********************************************************************/
+        **********************************************************************/
         store = new Store();
 
         try {
@@ -54,11 +54,11 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         }
 
-        System.out.print(".");
+        completeTest();
 
 
         /*  .addBeanBags() - add illegal number of bean bags
-        ***********************************************************************/
+        **********************************************************************/
         store = new Store();
 
         try {
@@ -72,11 +72,11 @@ public class BeanBagStoreTestApp
         }
 
         
-        System.out.print(".");
+        completeTest();
 
 
         /*  .addBeanBags() - use an invalid hex value
-        ***********************************************************************/
+        **********************************************************************/
         store = new Store();
 
         try {
@@ -89,19 +89,19 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         }
 
-        System.out.print(".");
+        completeTest();
 
 
         /*  .findBeanBag() - search for non-existent bag
-        ***********************************************************************/
+        **********************************************************************/
         store = new Store();
         bag = store.findBeanBag("123");
         assert bag == null : "findBeanBag() returned something unexpected";
-        System.out.print(".");
+        completeTest();
 
 
         /*  .findBeanBag() - search for existent bag
-        ***********************************************************************/
+        **********************************************************************/
         store = new Store();
         try {
             store.addBeanBags(1, "", "", "123", (short)2016, (byte)2);
@@ -112,11 +112,11 @@ public class BeanBagStoreTestApp
 
         bag = store.findBeanBag("123");
         assert bag.getId() == "123" : "Unexpected bag found";
-        System.out.print(".");        
+        completeTest();        
 
 
         /*  .reserveBeanBags() - reserve illegal quantity
-        ***********************************************************************/
+        **********************************************************************/
         try {
             store.reserveBeanBags(0, "123");
             assert false : "Reservation should have thrown error";
@@ -127,7 +127,7 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         } 
 
-        System.out.print(".");
+        completeTest();
 
 
     }
@@ -136,7 +136,7 @@ public class BeanBagStoreTestApp
         BeanBag bag;
 
         /*  Test Construction
-        ***********************************************************************/
+        **********************************************************************/
         bag = new BeanBag(1, "Bean", "Bag", "123", (short)2016, (byte)2);
 
         assert bag.getMonth() == (byte)2;
@@ -148,10 +148,10 @@ public class BeanBagStoreTestApp
         assert bag.getManufacturer() == "Bean";
         assert bag.getName() == "Bag";
 
-        System.out.print(".");
+        completeTest();
 
         /*  Test Getters and Setters
-        ***********************************************************************/
+        **********************************************************************/
 
     }
 }
