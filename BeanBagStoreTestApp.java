@@ -22,70 +22,68 @@ import beanbags.*; /* want all the exceptions, the interface and
 public class BeanBagStoreTestApp
 {
     public static void main(String[] args) {
-        TestAddBeanBagIllegalNumber();
-        System.out.print(".");
-        TestAddBeanBagIllegalID();
-        System.out.print(".");
-        TestFindBeanBagEmpty();
+
+        // Variable declaration
+        Store store;
+
+
+        /*  .addBeanBags() - add valid bean bag
+        ***********************************************************************/
+        store = new Store();
+
+        try {
+            store.addBeanBags(1, "", "", "0", (short)2016, (byte)02);
+            assert store.getBeanBagsArray().size() == 1;
+        }
+        catch (Exception err) {
+            assert false : "Unexpected exception thrown";
+        }
+
         System.out.print(".");
 
-        // BeanBagStore store = new BadStore();
-        // assert(store.getTotalPriceOfReservedBeanBags()==0) : "Initial BeanBagStore not empty as required";
-        // try {
-        //     store.addBeanBags(3,"Comfy Sacks", "Palermo", "AA0984B5", (short) 2016, (byte) 1); 
-        // } catch (IllegalNumberOfBeanBagsAddedException e) {
-        //     assert(false) : "IllegalNumberOfBeanBagsAddedException thrown incorrectly";   
-        // } catch (BeanBagMismatchException e) {
-        //     assert(false) : "BeanBagMismatchException thrown incorrectly"; 
-        // } catch (IllegalIDException e) {
-        //     assert(false) : "IllegalIDException thrown incorrectly"; 
-        // } catch (InvalidMonthException e) {
-        //     assert(false) : "InvalidMonthException thrown incorrectly"; 
-        // }
-        // assert(store.beanBagsInStock()==3) : "number of beans bags claimed in stock not matching number entered";
 
-        System.out.println("\nTests completed");
-    }
-
-    // Ensure adding an illegal number of beanbags raises
-    // IllegalNumberOfBeanBagsAddedException
-    private static void TestAddBeanBagIllegalNumber() {
-        Store store = new Store();
+        /*  .addBeanBags() - add illegal number of bean bags
+        ***********************************************************************/
+        store = new Store();
 
         try {
             store.addBeanBags(-1, "", "", "", (short)2016, (byte)02);
+            assert false : "IllegalNumberOfBeanBagsAddedException not raised";
         }
-        catch (IllegalNumberOfBeanBagsAddedException err) {
-            return;
-        }
+        catch (IllegalNumberOfBeanBagsAddedException err) {}
         catch (Exception err) {
             assert false : "Unexpected exception thrown";
         }
 
-        assert false : "IllegalNumberOfBeanBagsAddedException not raised";
-    }
+        
+        System.out.print(".");
 
-    // Adding an invalid hex ID must raise IllegalIDException
-    private static void TestAddBeanBagIllegalID() {
-        Store store = new Store();
+
+        /*  .addBeanBags() - use an invalid hex value
+        ***********************************************************************/
+        store = new Store();
 
         try {
             store.addBeanBags(1, "", "", "#nothex", (short)2016, (byte)02);
+            assert false : "IllegalIDException not raised";        
         }
-        catch (IllegalIDException err) {
-            return;
-        }
+        catch (IllegalIDException err) {}
         catch (Exception err) {
             assert false : "Unexpected exception thrown";
         }
 
-        assert false : "IllegalIDException not raised";        
-    }
+        System.out.print(".");
 
-    // Finding a bean bag in an empty Store will return null
-    private static void TestFindBeanBagEmpty() {
-        Store store = new Store();
+
+        /*  .findBeanBag() - search for non-existent bag
+        ***********************************************************************/
+        store = new Store();
         BeanBag bag = store.findBeanBag("123");
         assert bag == null : "findBeanBag() returned something unexpected";
+        System.out.print(".");
+
+
+
+        System.out.println("\nTests completed");
     }
 }
