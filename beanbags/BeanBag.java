@@ -45,11 +45,11 @@ public class BeanBag
 
     /*  Getters and Setters
     ***************************************************************************/
-    public short getMonth() {
+    public byte getMonth() {
         return this.month;
     }
 
-    public void setMonth(short value) {
+    public void setMonth(byte value) {
         this.month = value;
     }
 
