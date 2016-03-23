@@ -3,22 +3,12 @@ import beanbags.*; /* want all the exceptions, the interface and
 
 
 /**
- * A short program to illustrate an app testing some minimal
- * functionality of a concrete implementation of the BeanBagStore
- * interface -- note you will want to increase these checks, and
- * run it on your Store class (not the BadStore class)
- * 
- * Note, this program, like many others we've looked at, relies
- * a range of different types explictly in order to compile and 
- * run (and even more implictly). E.g.,
- * BadStore, BeanBagMismatchException, BeanBagStore, byte,
- * IllegalIDException, InvalidMonthException, 
- * IllegalNumberOfBeanBagsAddedException, int, short, String, String[]
+ * Test suite
  *
- *
- * @author Jonathan Fieldsend 
+ * @author Louis Haddrell
  * @version 1.0
  */
+
 public class BeanBagStoreTestApp
 {
     public static void main(String[] args) {
