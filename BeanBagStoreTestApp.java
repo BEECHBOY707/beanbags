@@ -292,7 +292,21 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         }
 
-        completeTest();    
+        completeTest();
+
+        /*  .sellBeanBags() - invalid number
+        **********************************************************************/
+        try {
+            store.sellBeanBags(0, "123");
+            assert false : "Sale should have thrown error";
+        }
+        catch (IllegalNumberOfBeanBagsSoldException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
     }
 
     public static void TestBeanBags() {

@@ -170,6 +170,10 @@ public class Store implements BeanBagStore
     InsufficientStockException, IllegalNumberOfBeanBagsSoldException,
     PriceNotSetException, BeanBagIDNotRecognisedException, IllegalIDException {
 
+        if (num < 1) {
+            throw new IllegalNumberOfBeanBagsSoldException();
+        }
+
         BeanBag bag = findBeanBag(id);
 
         if (!bag.inStock()) {
@@ -179,6 +183,7 @@ public class Store implements BeanBagStore
         if (bag.availableCount() < num) {
             throw new InsufficientStockException();
         }
+
     }
 
     /**
