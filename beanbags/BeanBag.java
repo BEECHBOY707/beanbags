@@ -22,7 +22,8 @@ public class BeanBag
     private String manufacturer;
     private String name;
     
-    //ArrayList reservedBeanBags = new ArrayList();
+    private ObjectArrayList reservations = new ObjectArrayList();
+    private ObjectArrayList sales = new ObjectArrayList();
 
     /**
      * Constructor for objects of class BeanBag
@@ -107,6 +108,15 @@ public class BeanBag
 
     public void setName(String value) {
         this.name = value;
+    }
+
+    public Boolean inStock() {
+        return this.availableCount() > 0;
+    }
+
+    public int availableCount() {
+        // Update later to subtract reserved bag count
+        return this.stockCount;
     }
     
     /**

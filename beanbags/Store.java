@@ -28,9 +28,55 @@ public class Store implements BeanBagStore
     InsufficientStockException, IllegalNumberOfBeanBagsSoldException,
     PriceNotSetException, BeanBagIDNotRecognisedException, IllegalIDException { }
 
-    public int reserveBeanBags(int num, String id) throws BeanBagNotInStockException,
-    InsufficientStockException, IllegalNumberOfBeanBagsReservedException,
-    PriceNotSetException, BeanBagIDNotRecognisedException, IllegalIDException { return 0; }
+    /**
+    *   Reserve some beanbags
+    *
+    *   @param quantity     Number of bags to reserve
+    *   @param id           Model ID of bag to reserve
+    *
+    *   @throws BeanBagNotInStockException
+    *               If the bean bag has previously been in stock, but is now
+    *               out of stock
+    *   @throws InsufficientStockException
+    *               If the bean bag is in stock, but not enough are available
+    *               to meet the reservation demand
+    *   @throws IllegalNumberOfBeanBagsReservedException
+    *               If the number of bean bags requested to reserve is fewer
+    *               than 1
+    *   @throws PriceNotSetException
+    *               If the bag is in stock, and there is sufficient stock to
+    *               meet demand, but the price has yet to be set
+    *   @throws BeanBagIDNotRecognisedException
+    *               If the ID does not match any bag in (or previously in) stock
+    *   @throws IllegalIDException
+    *               If the ID is not a positive eight character hexadecimal
+    *               number
+    */
+
+    public int reserveBeanBags(int quantity, String id)
+        throws BeanBagNotInStockException,
+               InsufficientStockException,
+               IllegalNumberOfBeanBagsReservedException,
+               PriceNotSetException,
+               BeanBagIDNotRecognisedException,
+               IllegalIDException {
+
+        if (quantity < 1) {
+            throw new IllegalNumberOfBeanBagsReservedException();
+        }
+
+        BeanBag beanbag = null;
+
+        if (!beanbag.inStock()) {
+            throw new BeanBagNotInStockException();
+        }
+
+        if (beanbag.availableCount() < quantity) {
+            throw new InsufficientStockException();
+        }
+
+        return 0;
+    }
 
     public void unreserveBeanBags(int reservationNumber)
     throws ReservationNumberNotRecognisedException { }
