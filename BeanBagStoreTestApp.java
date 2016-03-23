@@ -22,19 +22,61 @@ import beanbags.*; /* want all the exceptions, the interface and
 public class BeanBagStoreTestApp
 {
     public static void main(String[] args) {
-        BeanBagStore store = new BadStore();
-        assert(store.getTotalPriceOfReservedBeanBags()==0) : "Initial BeanBagStore not empty as required";
+        TestAddBeanBagIllegalNumber();
+        System.out.print(".");
+        TestAddBeanBagIllegalID();
+        System.out.print(".");        
+
+        // BeanBagStore store = new BadStore();
+        // assert(store.getTotalPriceOfReservedBeanBags()==0) : "Initial BeanBagStore not empty as required";
+        // try {
+        //     store.addBeanBags(3,"Comfy Sacks", "Palermo", "AA0984B5", (short) 2016, (byte) 1); 
+        // } catch (IllegalNumberOfBeanBagsAddedException e) {
+        //     assert(false) : "IllegalNumberOfBeanBagsAddedException thrown incorrectly";   
+        // } catch (BeanBagMismatchException e) {
+        //     assert(false) : "BeanBagMismatchException thrown incorrectly"; 
+        // } catch (IllegalIDException e) {
+        //     assert(false) : "IllegalIDException thrown incorrectly"; 
+        // } catch (InvalidMonthException e) {
+        //     assert(false) : "InvalidMonthException thrown incorrectly"; 
+        // }
+        // assert(store.beanBagsInStock()==3) : "number of beans bags claimed in stock not matching number entered";
+
+        System.out.println("\nTests completed");
+    }
+
+    // Ensure adding an illegal number of beanbags raises
+    // IllegalNumberOfBeanBagsAddedException
+    private static void TestAddBeanBagIllegalNumber() {
+        Store store = new Store();
+
         try {
-            store.addBeanBags(3,"Comfy Sacks", "Palermo", "AA0984B5", (short) 2016, (byte) 1); 
-        } catch (IllegalNumberOfBeanBagsAddedException e) {
-            assert(false) : "IllegalNumberOfBeanBagsAddedException thrown incorrectly";   
-        } catch (BeanBagMismatchException e) {
-            assert(false) : "BeanBagMismatchException thrown incorrectly"; 
-        } catch (IllegalIDException e) {
-            assert(false) : "IllegalIDException thrown incorrectly"; 
-        } catch (InvalidMonthException e) {
-            assert(false) : "InvalidMonthException thrown incorrectly"; 
+            store.addBeanBags(-1, "", "", "", (short)2016, (byte)02);
         }
-        assert(store.beanBagsInStock()==3) : "number of beans bags claimed in stock not matching number entered";
+        catch (IllegalNumberOfBeanBagsAddedException err) {
+            return;
+        }
+        catch (Exception err) {
+            assert false : "Unexpected exception thrown";
+        }
+
+        assert false : "IllegalNumberOfBeanBagsAddedException not raised";
+    }
+
+    // Adding an invalid hex ID must raise IllegalIDException
+    private static void TestAddBeanBagIllegalID() {
+        Store store = new Store();
+
+        try {
+            store.addBeanBags(1, "", "", "#nothex", (short)2016, (byte)02);
+        }
+        catch (IllegalIDException err) {
+            return;
+        }
+        catch (Exception err) {
+            assert false : "Unexpected exception thrown";
+        }
+
+        assert false : "IllegalIDException not raised";        
     }
 }
