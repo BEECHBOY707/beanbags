@@ -184,6 +184,9 @@ public class Store implements BeanBagStore
             throw new InsufficientStockException();
         }
 
+        if (!bag.hasPrice()) {
+            throw new PriceNotSetException();
+        }
     }
 
     /**

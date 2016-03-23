@@ -294,6 +294,7 @@ public class BeanBagStoreTestApp
 
         completeTest();
 
+
         /*  .sellBeanBags() - invalid number
         **********************************************************************/
         try {
@@ -307,6 +308,28 @@ public class BeanBagStoreTestApp
         }
 
         completeTest();
+
+
+        /*  .sellBeanBags() - price not set
+        **********************************************************************/
+        try {
+            store.addBeanBags(1, "", "", "112", (short)2016, (byte)02);
+        }
+        catch (Exception err) {
+            assert false : "Adding bean bags threw error";
+        }
+
+        try {
+            store.sellBeanBags(1, "112");
+            assert false : "Sale should have thrown error";
+        }
+        catch (PriceNotSetException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();        
     }
 
     public static void TestBeanBags() {
