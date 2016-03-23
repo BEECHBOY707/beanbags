@@ -14,7 +14,44 @@ public class Store implements BeanBagStore
     public void addBeanBags(int num, String manufacturer, String name, 
     String id, short year, byte month)
     throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException,
-    IllegalIDException, InvalidMonthException { }
+    IllegalIDException, InvalidMonthException 
+    { 
+        boolean idValid = false; // Sets up variable to monitor if id entered is valid
+        try {
+            Long.parseLong(id,16); // Tries to see if ID can be changed, proving its a hexadecimal
+            idValid = true;
+        } catch (IllegalIDException x) {
+            System.err.println("ID entered is invalid.");
+        }
+        if ( idValid )
+        {
+            if (num < 1)
+            {
+                throw new IllegalNumberOfBeanBagsAddedException("You must add at least one bag");
+            }
+            else if (month > 0 && month < 13)
+            {
+                throw new InvalidMonthException("The month that you have entered is not valid");
+            }
+            else
+            {
+                if ( id.id == null) { // Check to ensure BeanBag id type has not already been created
+                    public void add(Object BeanBag(num, manufacturer, name, id, year, month, information));
+                }
+                else 
+                {
+                    if (id.manufacturer.equals(manufacturer) && id.name.equals(name) && id.id.equals(id) && id.year.equals(year) && id.month.equals(month))
+                    {
+                        id.num = id.num + num;
+                    }
+                    else
+                    {
+                        throw new BeanBagMismatchException("BeanBag details entered do not match previous entry.");
+                    }
+                }
+            }
+        }
+    }
 
     public void addBeanBags(int num, String manufacturer, String name, 
     String id, short year, byte month, String information)
