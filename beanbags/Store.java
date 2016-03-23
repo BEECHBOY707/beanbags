@@ -122,7 +122,27 @@ public class Store implements BeanBagStore
    }
 
     public void setBeanBagPrice(String id, int priceInPence) 
-    throws InvalidPriceException, BeanBagIDNotRecognisedException, IllegalIDException { }
+    throws InvalidPriceException, BeanBagIDNotRecognisedException, IllegalIDException {
+        if ( validateHex(id) ) { // Ensure ID is legal
+            if ( priceInPence >= 0 ) { // Ensure price is legal
+                try {
+                    // Check if a bean bag with this ID already exists
+                    BeanBag existingBag = this.findBeanBag(id);
+                    // Set price
+                    existingBag.setPrice(priceInPence);
+                }
+                catch (RuntimeException err) {
+                    throw new BeanBagIDNotRecognisedException();
+                }
+            }
+            else {
+                throw new InvalidPriceException();
+            }
+        }
+        else {
+            throw new IllegalIDException();
+        }
+    }
 
     public void sellBeanBags(int num, String id) throws BeanBagNotInStockException,
     InsufficientStockException, IllegalNumberOfBeanBagsSoldException,
