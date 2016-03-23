@@ -65,18 +65,12 @@ public class Store implements BeanBagStore
      * @param name    bean bag name to search for
      * @param manufacturer    bean bag manufacturer to search for
      */
-    public BeanBag findBeanBag(String id, String name, String manufacturer , int num)
-    throws BeanBagMismatchException{
+    public BeanBag findBeanBag(String id) {
         // Iterate BeanBag array searching for the ID
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
             if (bag.getId() == id) {
-                if ((bag.getName() == name) && (bag.getManufacturer() == manufacturer) ) {
-                    // If parameters are all equal, same bag found
-                    bag.setStockCount((bag.getStockCount() + num));
-                }
-                // Otherwise, correct bag not found, so raise exception
-                throw new BeanBagMismatchException();
+                return bag;
             }
         }
         
@@ -139,7 +133,7 @@ public class Store implements BeanBagStore
         }
 
         // Check if a bean bag with this ID already exists
-        BeanBag existingBag = this.findBeanBag(id, manufacturer, name, num);
+        BeanBag existingBag = this.findBeanBag(id);
         
         // No ID collision; add BeanBag
         if (existingBag == null) {
@@ -147,7 +141,14 @@ public class Store implements BeanBagStore
             this.beanBags.add(bag);
             return;
         }
+
+        // Check if we are able to merge with an existing bean bag
+        if (existingBag.getName() == name && existingBag.getManufacturer() == manufacturer) {
+            // If parameters are all equal, same bag found
+            existingBag.setStockCount((existingBag.getStockCount() + num));
+        }
         
+        // Otherwise, correct bag not found, so raise exception
         throw new BeanBagMismatchException();
     }
 
