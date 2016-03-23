@@ -214,17 +214,51 @@ public class BeanBagStoreTestApp
 
         /*  .reserveBeanBags() - reserve a bag
         **********************************************************************/
+        int reservationID = 0;
         bag.setPrice(5000);
 
         try {
-            store.reserveBeanBags(1, "123");
+            reservationID = store.reserveBeanBags(1, "123");
         }
         catch (Exception err) {
             System.out.println(err);
             assert false : "Unexpected exception thrown";
         }
 
-        completeTest(); 
+        assert reservationID != 0 : "reservationID not set";
+        assert bag.getReservedCount() == 1 : "Reservation not made";
+
+        completeTest();
+
+
+        /*  .unreserveBeanBags() - unreserve an valid ID
+        **********************************************************************/
+        try {
+            store.unreserveBeanBags(reservationID);
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        assert bag.getReservedCount() == 0 : "Reservation not removed";
+
+        completeTest();
+
+
+        /*  .unreserveBeanBags() - unreserve an unrecognised ID
+        **********************************************************************/
+        try {
+            store.unreserveBeanBags(9999);
+            assert false : "Reservation should have thrown error";
+        }
+        catch (ReservationNumberNotRecognisedException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
     }
 
     public static void TestBeanBags() {

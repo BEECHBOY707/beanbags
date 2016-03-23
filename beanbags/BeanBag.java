@@ -145,8 +145,17 @@ public class BeanBag
         return id;
     }
 
+    // Return true if the reservation was found in this class
+    public Boolean unreserve(int reservationID) {
+        for (int i=0; i < this.reservations.size(); i++){
+            Reservation reservation = (Reservation) this.reservations.get(i);
+            if (reservation.getID() == reservationID) {
+                this.reservedCount -= reservation.getQuantity();
+                this.reservations.remove(reservation);
+                return true;
             }
         }
-        return 0;
+
+        return false;
     }
 }
