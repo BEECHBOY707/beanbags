@@ -12,7 +12,11 @@ import beanbags.*; /* want all the exceptions, the interface and
 public class BeanBagStoreTestApp
 {
     public static void main(String[] args) {
+        TestStore();
+        System.out.println("\nTests completed");
+    }
 
+    public static void TestStore() {
         // Variable declaration
         Store store;
 
@@ -71,9 +75,28 @@ public class BeanBagStoreTestApp
         BeanBag bag = store.findBeanBag("123");
         assert bag == null : "findBeanBag() returned something unexpected";
         System.out.print(".");
+    }
 
+    public static void TestBeanBags() {
+        BeanBag bag;
 
+        /*  Test Construction
+        ***********************************************************************/
+        bag = new BeanBag(1, "Bean", "Bag", "123", (short)2016, (byte)2);
 
-        System.out.println("\nTests completed");
+        assert bag.getMonth() == (byte)2;
+        assert bag.getPrice() == -1;
+        assert bag.getStockCount() == 1;
+        assert bag.getYear() == 2016;
+        assert bag.getId() == "123";
+        assert bag.getInformation() == "";
+        assert bag.getManufacturer() == "Bean";
+        assert bag.getName() == "Bag";
+
+        System.put.print(".");
+
+        /*  Test Getters and Setters
+        ***********************************************************************/
+
     }
 }
