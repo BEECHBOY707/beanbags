@@ -174,6 +174,10 @@ public class Store implements BeanBagStore
             throw new IllegalNumberOfBeanBagsSoldException();
         }
 
+        if (!validateHex(id)) {
+            throw new IllegalIDException();
+        }
+
         BeanBag bag = findBeanBag(id);
 
         if (bag == null) {

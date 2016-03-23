@@ -313,14 +313,14 @@ public class BeanBagStoreTestApp
         /*  .sellBeanBags() - price not set
         **********************************************************************/
         try {
-            store.addBeanBags(1, "", "", "112", (short)2016, (byte)02);
+            store.addBeanBags(1, "", "", "119", (short)2016, (byte)02);
         }
         catch (Exception err) {
             assert false : "Adding bean bags threw error";
         }
 
         try {
-            store.sellBeanBags(1, "112");
+            store.sellBeanBags(1, "119");
             assert false : "Sale should have thrown error";
         }
         catch (PriceNotSetException err) {}
@@ -345,6 +345,21 @@ public class BeanBagStoreTestApp
         }
 
         completeTest();
+
+
+        /*  .sellBeanBags() - illegal ID
+        **********************************************************************/
+        try {
+            store.sellBeanBags(1, "NOTHEX");
+            assert false : "Sale should have thrown error";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();        
     }
 
     public static void TestBeanBags() {
