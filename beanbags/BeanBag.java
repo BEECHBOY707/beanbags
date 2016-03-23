@@ -10,24 +10,25 @@ package beanbags;
 public class BeanBag
 {
     // instance variables
+    private static int bagReservedCount;
+    private static int bagStockCount;
+    private static int reservationIdCreationCounter;
+
+    private byte month;
+    private int priceInPence;
+    private short year;
+    private String id;
+    private String information;
     private String manufacturer;
     private String name;
-    private int priceInPence;
-    private String id;
-    private short year;
-    private byte month;
-    private String information;
-    private static int bagStockCount;
-    private static int bagReservedCount;
     
     //ArrayList reservedBeanBags = new ArrayList();
-    private static int reservationIdCreationCounter;
 
     /**
      * Constructor for objects of class BeanBag
      */
-    public BeanBag()
-    {
+    public BeanBag(int num, String manufacturer, String name, String id,
+                   short year, byte month) {
         // initialise instance variables
         bagStockCount = 0;
         bagReservedCount = 0;
@@ -37,8 +38,9 @@ public class BeanBag
     /**
      * Methods to get and set instance's variables
      */
-    public void addBeanBags(int num, String manufacturer, String name, String id, short year, byte month, String information)
-    {
+    public void addBeanBags(int num, String manufacturer, String name,
+                            String id, short year, byte month,
+                            String information) {
         this.manufacturer = manufacturer;
         this.name = name;
         this.id = id;
@@ -47,34 +49,28 @@ public class BeanBag
         this.information = information;
     }
     
-    public String getManufacturer()
-    {
-        return manufacturer;
+    public String getManufacturer() {
+        return this.manufacturer;
     }
     
-    public String getName()
-    {
-        return name;
+    public String getName() {
+        return this.name;
     }
     
-    public String getid()
-    {
-        return id;
+    public String getid() {
+        return this.id;
     }
     
-    public short getYear()
-    {
-        return year;
+    public short getYear() {
+        return this.year;
     }
     
-    public short getMonth()
-    {
-        return month;
+    public short getMonth() {
+        return this.month;
     }
     
-    public String getInformation()
-    {
-        return information;
+    public String getInformation() {
+        return this.information;
     }
     
     /**
