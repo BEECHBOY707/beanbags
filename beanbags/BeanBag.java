@@ -28,6 +28,12 @@ public class BeanBag
      * Constructor for objects of class BeanBag
      */
     public BeanBag(int num, String manufacturer, String name, String id,
+                   short year, byte month) {
+
+        this(num, manufacturer, name, id, year, month, "");
+    }
+
+    public BeanBag(int num, String manufacturer, String name, String id,
                    short year, byte month, String information) {
 
         this.stockCount = num;
