@@ -25,9 +25,14 @@ public class BeanBag
     private ObjectArrayList reservations = new ObjectArrayList();
     private ObjectArrayList sales = new ObjectArrayList();
 
-    /**
-     * Constructor for objects of class BeanBag
-     */
+    /*  Constructors
+    ***************************************************************************/
+    public BeanBag(int num, String manufacturer, String name, String id,
+                   short year, byte month) {
+
+        this(num, manufacturer, name, id, year, month, "");
+    }
+
     public BeanBag(int num, String manufacturer, String name, String id,
                    short year, byte month, String information) {
 

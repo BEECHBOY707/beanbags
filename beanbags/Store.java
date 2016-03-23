@@ -10,11 +10,98 @@ import java.io.IOException;
  */
 public class Store implements BeanBagStore
 {
- 
+    private ObjectArrayList beanBags;
+    
+    /*  Constructor
+    ***************************************************************************/
+    public Store() {
+        this.beanBags = new ObjectArrayList();    
+    }
+
+
+    /*  Getters and Setters
+    ***************************************************************************/
+    public ObjectArrayList getBeanBagsArray() {
+        return this.beanBags;
+    }
+
+    /*  Methods
+    ***************************************************************************/
+
+    /**
+     * Retrieve a BeanBag object from Storage based on ID
+     * 
+     * @param id    bean bag ID to search for
+     */
+    public BeanBag findBeanBag(String id) {
+        // Iterate BeanBag array searching for the ID
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            if (bag.getId() == id) {
+                return bag;
+            }
+        }
+        
+        // ID not found
+        return null;
+    }
+
+    /**
+     * Method adds bean bags to the store with the arguments as bean bag details.
+     * <p>
+     * The state of this BeanBagStore must be be unchanged if any exceptions are
+     * thrown.
+     *
+     * @param num               number of bean bags added
+     * @param manufacturer      bean bag manufacturer
+     * @param name              bean bag name
+     * @param id                ID of bean bag
+     * @param year              year of manufacture
+     * @param month             month of manufacture
+     * @param information       free text detailing bean bag information
+     * @throws IllegalNumberOfBeanBagsAddedException   if the number to be added
+     *                           is less than 1
+     * @throws BeanBagMismatchException if the id already exists in the store, but
+     *                           the other stored elements (manufacturer, name and
+     *                           free text) do not match
+     * @throws IllegalIDException   if the ID is not a positive eight character
+     *                           hexadecimal number
+     * @throws InvalidMonthException    if the month is not in the range 1 to 12
+     */
     public void addBeanBags(int num, String manufacturer, String name, 
-    String id, short year, byte month)
-    throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException,
-    IllegalIDException, InvalidMonthException { }
+                            String id, short year, byte month)
+        throws IllegalNumberOfBeanBagsAddedException,
+               BeanBagMismatchException,
+               IllegalIDException,
+               InvalidMonthException { 
+        
+        // Ensure we are trying to add a legal number of beanbags
+        if (num < 1) {
+            throw new IllegalNumberOfBeanBagsAddedException();
+        }
+        
+        // Ensure ID string is valid hexadecimal
+        try {
+            // Attempt to convert hex to long
+            Long.valueOf(id, 16);
+        }
+        // Invalid hex strings throw NumberFormatException
+        catch (NumberFormatException err) {
+            throw new IllegalIDException();
+        }
+        
+        // Check if a bean bag with this ID already exists
+        BeanBag existingBag = this.findBeanBag(id);
+        
+        // No ID collision; add BeanBag
+        if (existingBag == null) {
+            BeanBag bag = new BeanBag(num, manufacturer, name, id, year, month);
+            this.beanBags.add(bag);
+            return;
+        }        
+        
+        throw new BeanBagMismatchException();
+    }
 
     public void addBeanBags(int num, String manufacturer, String name, 
     String id, short year, byte month, String information)
