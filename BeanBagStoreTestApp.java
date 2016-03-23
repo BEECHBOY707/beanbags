@@ -398,7 +398,19 @@ public class BeanBagStoreTestApp
         **********************************************************************/
         bag.unreserve(reservationID);
         assert bag.availableCount() == 10;
-        completeTest();        
+        completeTest();
+
+        /*  Test Sell
+        **********************************************************************/
+        int available = bag.availableCount();        
+        int sold = bag.getSoldCount();
+        
+        bag.sell(1);
+        
+        assert bag.availableCount() == available-1;
+        assert bag.getSoldCount() == sold+1;
+
+        completeTest();
     }
 
     public static void TestReservation() {

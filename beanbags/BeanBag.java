@@ -14,6 +14,7 @@ public class BeanBag
     private byte month;
     private int priceInPence;
     private int reservedCount;
+    private int soldCount;
     private int stockCount;
     private ObjectArrayList reservations;
     private ObjectArrayList sales;
@@ -136,8 +137,19 @@ public class BeanBag
         return this.reservedCount;
     }
 
+    public int getSoldCount() {
+        return this.soldCount;
+    }
+
     /*  Methods
     **************************************************************************/
+    public void sell(int quantity) {
+        Sale sale = new Sale(this.priceInPence, quantity);
+        this.sales.add(sale);
+        this.stockCount -= quantity;
+        this.soldCount += quantity;
+    }
+
     public int reserve(int quantity) {
         int id = BeanBag.generateReservationID();
         this.reservations.add(new Reservation(id, this.priceInPence, quantity));

@@ -196,6 +196,7 @@ public class Store implements BeanBagStore
             throw new PriceNotSetException();
         }
 
+        bag.sell(num);
     }
 
     /**
