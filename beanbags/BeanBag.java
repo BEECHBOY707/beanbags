@@ -11,10 +11,10 @@ public class BeanBag
 {
     // instance variables
     private static int bagReservedCount;
-    private static int bagStockCount;
     private static int reservationIdCreationCounter;
 
     private byte month;
+    private int bagStockCount;
     private int priceInPence;
     private short year;
     private String id;
@@ -28,27 +28,21 @@ public class BeanBag
      * Constructor for objects of class BeanBag
      */
     public BeanBag(int num, String manufacturer, String name, String id,
-                   short year, byte month) {
-        // initialise instance variables
-        bagStockCount = 0;
-        bagReservedCount = 0;
-        reservationIdCreationCounter = 0;
-    }
+                   short year, byte month, String information) {
 
-    /**
-     * Methods to get and set instance's variables
-     */
-    public void addBeanBags(int num, String manufacturer, String name,
-                            String id, short year, byte month,
-                            String information) {
+        this.bagStockCount = num;
         this.manufacturer = manufacturer;
         this.name = name;
         this.id = id;
         this.year = year;
         this.month = month;
         this.information = information;
+
+        // initialise instance variables
+        BeanBag.bagReservedCount = 0;
+        BeanBag.reservationIdCreationCounter = 0;
     }
-    
+
     public String getManufacturer() {
         return this.manufacturer;
     }
