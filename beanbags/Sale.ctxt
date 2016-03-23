@@ -1,0 +1,4 @@
+#BlueJ class context
+comment0.params=priceInPence\ quantity
+comment0.target=Sale(int,\ int)
+numComments=1
