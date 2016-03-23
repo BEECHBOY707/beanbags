@@ -9,9 +9,7 @@ package beanbags;
  */
 public class BeanBag
 {
-    // instance variables
-    private static int bagReservedCount;
-    private static int reservationIdCreationCounter;
+    private static int reservationCounter = 0;
 
     private byte month;
     private int priceInPence;
@@ -20,10 +18,9 @@ public class BeanBag
     private String id;
     private String information;
     private String manufacturer;
-    private String name;
-    
-    private ObjectArrayList reservations = new ObjectArrayList();
-    private ObjectArrayList sales = new ObjectArrayList();
+    private String name;  
+    private ObjectArrayList reservations;
+    private ObjectArrayList sales;
 
     /*  Constructors
     ***************************************************************************/
@@ -44,9 +41,9 @@ public class BeanBag
         this.month = month;
         this.information = information;
 
-        // initialise instance variables
-        BeanBag.bagReservedCount = 0;
-        BeanBag.reservationIdCreationCounter = 0;
+        this.reservations = new ObjectArrayList();
+        this.sales = new ObjectArrayList();
+        this.priceInPence = -1;
     }
 
     /*  Getters and Setters

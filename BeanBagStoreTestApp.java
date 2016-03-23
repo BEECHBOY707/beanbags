@@ -130,6 +130,38 @@ public class BeanBagStoreTestApp
         completeTest();
 
 
+        /*  .reserveBeanBags() - reserve out-of-stock bag
+        **********************************************************************/
+        bag.setStockCount(0);
+
+        try {
+            store.reserveBeanBags(1, "123");
+            assert false : "Reservation should have thrown error";
+        }
+        catch (BeanBagNotInStockException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        } 
+
+        completeTest();
+
+
+        /*  .reserveBeanBags() - reserve bag with insufficient stock
+        **********************************************************************/
+        bag.setStockCount(10);
+
+        try {
+            store.reserveBeanBags(100, "123");
+            assert false : "Reservation should have thrown error";
+        }
+        catch (InsufficientStockException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        } 
+
+        completeTest();
     }
 
     public static void TestBeanBags() {

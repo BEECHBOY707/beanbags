@@ -27,12 +27,6 @@ public class Store implements BeanBagStore
 
     /*  Methods
     ***************************************************************************/
-
-    /**
-     * Retrieve a BeanBag object from Storage based on ID
-     * 
-     * @param id    bean bag ID to search for
-     */
     public BeanBag findBeanBag(String id) {
         // Iterate BeanBag array searching for the ID
         for (int i=0; i < this.beanBags.size(); i++){
@@ -162,7 +156,7 @@ public class Store implements BeanBagStore
             throw new IllegalNumberOfBeanBagsReservedException();
         }
 
-        BeanBag beanbag = null;
+        BeanBag beanbag = this.findBeanBag(id);
 
         if (!beanbag.inStock()) {
             throw new BeanBagNotInStockException();
