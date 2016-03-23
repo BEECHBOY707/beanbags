@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.params=
+comment0.target=BeanBag()
+comment0.text=\n\ Constructor\ for\ objects\ of\ class\ BeanBag\n
+comment1.params=num\ manufacturer\ name\ id\ year\ month\ information
+comment1.target=void\ addBeanBags(int,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ short,\ byte,\ java.lang.String)
+comment1.text=\n\ Methods\ to\ get\ and\ set\ instance's\ variables\n
+comment2.params=
+comment2.target=java.lang.String\ getManufacturer()
+comment3.params=
+comment3.target=java.lang.String\ getName()
+comment4.params=
+comment4.target=java.lang.String\ getid()
+comment5.params=
+comment5.target=short\ getYear()
+comment6.params=
+comment6.target=short\ getMonth()
+comment7.params=
+comment7.target=java.lang.String\ getInformation()
+comment8.params=num\ id
+comment8.target=int\ reserveBeanBags(int,\ java.lang.String)
+comment8.text=\n\ Miscellaneous\ methods\n
+numComments=9
