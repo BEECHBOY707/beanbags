@@ -12,17 +12,28 @@ public class Store implements BeanBagStore
 {
     private ObjectArrayList beanBags;
     
-    // Constructor
+    /*  Constructor
+    ***************************************************************************/
     public Store() {
         this.beanBags = new ObjectArrayList();    
     }
-    
+
+
+    /*  Getters and Setters
+    ***************************************************************************/
+    public ObjectArrayList getBeanBagsArray() {
+        return this.beanBags;
+    }
+
+    /*  Methods
+    ***************************************************************************/
+
     /**
      * Retrieve a BeanBag object from Storage based on ID
      * 
      * @param id    bean bag ID to search for
      */
-    public BeanBag getBeanBag(String id) {
+    public BeanBag findBeanBag(String id) {
         // Iterate BeanBag array searching for the ID
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
@@ -80,7 +91,7 @@ public class Store implements BeanBagStore
         }
         
         // Check if a bean bag with this ID already exists
-        BeanBag existingBag = this.getBeanBag(id);
+        BeanBag existingBag = this.findBeanBag(id);
         
         // No ID collision; add BeanBag
         if (existingBag == null) {

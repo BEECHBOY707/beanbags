@@ -24,9 +24,8 @@ public class BeanBag
     
     //ArrayList reservedBeanBags = new ArrayList();
 
-    /**
-     * Constructor for objects of class BeanBag
-     */
+    /*  Constructors
+    ***************************************************************************/
     public BeanBag(int num, String manufacturer, String name, String id,
                    short year, byte month) {
 

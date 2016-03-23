@@ -25,7 +25,9 @@ public class BeanBagStoreTestApp
         TestAddBeanBagIllegalNumber();
         System.out.print(".");
         TestAddBeanBagIllegalID();
-        System.out.print(".");        
+        System.out.print(".");
+        TestFindBeanBagEmpty();
+        System.out.print(".");
 
         // BeanBagStore store = new BadStore();
         // assert(store.getTotalPriceOfReservedBeanBags()==0) : "Initial BeanBagStore not empty as required";
@@ -78,5 +80,12 @@ public class BeanBagStoreTestApp
         }
 
         assert false : "IllegalIDException not raised";        
+    }
+
+    // Finding a bean bag in an empty Store will return null
+    private static void TestFindBeanBagEmpty() {
+        Store store = new Store();
+        BeanBag bag = store.findBeanBag("123");
+        assert bag == null : "findBeanBag() returned something unexpected";
     }
 }
