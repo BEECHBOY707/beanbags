@@ -35,46 +35,61 @@ public class Store implements BeanBagStore
         return null;
     }
 
+    /**
+     * Method adds bean bags to the store with the arguments as bean bag details.
+     * <p>
+     * The state of this BeanBagStore must be be unchanged if any exceptions are
+     * thrown.
+     *
+     * @param num               number of bean bags added
+     * @param manufacturer      bean bag manufacturer
+     * @param name              bean bag name
+     * @param id                ID of bean bag
+     * @param year              year of manufacture
+     * @param month             month of manufacture
+     * @param information       free text detailing bean bag information
+     * @throws IllegalNumberOfBeanBagsAddedException   if the number to be added
+     *                           is less than 1
+     * @throws BeanBagMismatchException if the id already exists in the store, but
+     *                           the other stored elements (manufacturer, name and
+     *                           free text) do not match
+     * @throws IllegalIDException   if the ID is not a positive eight character
+     *                           hexadecimal number
+     * @throws InvalidMonthException    if the month is not in the range 1 to 12
+     */
     public void addBeanBags(int num, String manufacturer, String name, 
-    String id, short year, byte month)
-    throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException,
-    IllegalIDException, InvalidMonthException 
-    { 
-        boolean idValid = false; // Sets up variable to monitor if id entered is valid
+                            String id, short year, byte month)
+        throws IllegalNumberOfBeanBagsAddedException,
+               BeanBagMismatchException,
+               IllegalIDException,
+               InvalidMonthException { 
+        
+        // Ensure we are trying to add a legal number of beanbags
+        if (num < 1) {
+            throw new IllegalNumberOfBeanBagsAddedException();
+        }
+        
+        // Ensure ID string is valid hexadecimal
         try {
-            Long.parseLong(id,16); // Tries to see if ID can be changed, proving its a hexadecimal
-            idValid = true;
-        } catch (IllegalIDException x) {
-            System.err.println("ID entered is invalid.");
+            // Attempt to convert hex to long
+            Long.valueOf(id, 16);
         }
-        if ( idValid )
-        {
-            if (num < 1)
-            {
-                throw new IllegalNumberOfBeanBagsAddedException("You must add at least one bag");
-            }
-            else if (month > 0 && month < 13)
-            {
-                throw new InvalidMonthException("The month that you have entered is not valid");
-            }
-            else
-            {
-                if ( id.id == null) { // Check to ensure BeanBag id type has not already been created
-                    public void add(Object BeanBag(num, manufacturer, name, id, year, month, information));
-                }
-                else 
-                {
-                    if (id.manufacturer.equals(manufacturer) && id.name.equals(name) && id.id.equals(id) && id.year.equals(year) && id.month.equals(month))
-                    {
-                        id.num = id.num + num;
-                    }
-                    else
-                    {
-                        throw new BeanBagMismatchException("BeanBag details entered do not match previous entry.");
-                    }
-                }
-            }
+        // Invalid hex strings throw NumberFormatException
+        catch (NumberFormatException err) {
+            throw new IllegalIDException();
         }
+        
+        // Check if a bean bag with this ID already exists
+        BeanBag existingBag = this.getBeanBag(id);
+        
+        // No ID collision; add BeanBag
+        if (existingBag == null) {
+            BeanBag bag = new BeanBag(num, manufacturer, name, id, year, month);
+            this.beanBags.add(bag);
+            return;
+        }        
+        
+        throw new BeanBagMismatchException();
     }
 
     public void addBeanBags(int num, String manufacturer, String name, 
