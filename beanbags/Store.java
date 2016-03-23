@@ -144,9 +144,38 @@ public class Store implements BeanBagStore
         }
     }
 
+    /**
+     * Method sells bean bags with the corresponding ID from the store and removes
+     * the sold bean bags from the stock.
+     * <p>
+     * The state of this BeanBagStore must be be unchanged if any exceptions are
+     * thrown.
+     *
+     * @param num           number of bean bags to be sold
+     * @param id            ID of bean bags to be sold
+     * @throws BeanBagNotInStockException   if the bean bag has previously been in
+     *                      stock, but is now out of stock
+     * @throws InsufficientStockException   if the bean bag is in stock, but not
+     *                      enough are available to meet sale demand
+     * @throws IllegalNumberOfBeanBagsSoldException if an attempt is being made to 
+     *                      sell fewer than 1 bean bag
+     * @throws PriceNotSetException if the bag is in stock, and there is sufficient
+     *                      stock to meet demand, but the price has yet to be set
+     * @throws BeanBagIDNotRecognisedException  if the ID does not match any bag in 
+     *                          (or previously in) stock
+     * @throws IllegalIDException   if the ID is not a positive eight character
+     *                           hexadecimal number
+     */
     public void sellBeanBags(int num, String id) throws BeanBagNotInStockException,
     InsufficientStockException, IllegalNumberOfBeanBagsSoldException,
-    PriceNotSetException, BeanBagIDNotRecognisedException, IllegalIDException { }
+    PriceNotSetException, BeanBagIDNotRecognisedException, IllegalIDException {
+
+        BeanBag bag = findBeanBag(id);
+
+        if (!bag.inStock()) {
+            throw new BeanBagNotInStockException();
+        }
+    }
 
     /**
     *   Reserve some beanbags
@@ -172,7 +201,6 @@ public class Store implements BeanBagStore
     *               If the ID is not a positive eight character hexadecimal
     *               number
     */
-
     public int reserveBeanBags(int quantity, String id)
         throws BeanBagNotInStockException,
                InsufficientStockException,

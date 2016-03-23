@@ -250,7 +250,7 @@ public class BeanBagStoreTestApp
         **********************************************************************/
         try {
             store.unreserveBeanBags(9999);
-            assert false : "Reservation should have thrown error";
+            assert false : "Unreserve should have thrown error";
         }
         catch (ReservationNumberNotRecognisedException err) {}
         catch (Exception err) {
@@ -259,6 +259,23 @@ public class BeanBagStoreTestApp
         }
 
         completeTest();
+
+
+        /*  .sellBeanBags() - bean bag out of stock
+        **********************************************************************/
+        bag.setStockCount(0);
+
+        try {
+            store.sellBeanBags(1, "123");
+            assert false : "Sale should have thrown error";
+        }
+        catch (BeanBagNotInStockException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();        
     }
 
     public static void TestBeanBags() {
