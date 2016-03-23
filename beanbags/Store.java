@@ -27,12 +27,56 @@ public class Store implements BeanBagStore
 
     /*  Methods
     ***************************************************************************/
-    public BeanBag findBeanBag(String id) {
+    /**
+     * Retrieve a BeanBag object from Storage based on ID, ensuring that the
+     * name, manufacturer and free text component are the same, otherwise
+     * create a new BeanBag
+     * 
+     * @param id    bean bag ID to search for
+     * @param name    bean bag name to search for
+     * @param manufacturer    bean bag manufacturer to search for
+     * @param information    bean bag information to search for
+     */
+    public BeanBag findBeanBag(String id, String name, String manufacturer, String information, int num)
+    throws BeanBagMismatchException{
         // Iterate BeanBag array searching for the ID
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
             if (bag.getId() == id) {
-                return bag;
+                if ((bag.getName() == name) && (bag.getManufacturer() == manufacturer) && (bag.getInformation() == information) ) {
+                    // If parameters are all equal, same bag found
+                    bag.setStockCount((bag.getStockCount() + num));
+                }
+                // Otherwise, correct bag not found, so raise exception
+                throw new BeanBagMismatchException();
+            }
+        }
+        
+        // ID not found
+        return null;
+    }
+    
+    /**
+     * Retrieve a BeanBag object from Storage based on ID, ensuring that the
+     * name, manufacturer and free text component are the same, otherwise
+     * create a new BeanBag
+     * 
+     * @param id    bean bag ID to search for
+     * @param name    bean bag name to search for
+     * @param manufacturer    bean bag manufacturer to search for
+     */
+    public BeanBag findBeanBag(String id, String name, String manufacturer , int num)
+    throws BeanBagMismatchException{
+        // Iterate BeanBag array searching for the ID
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            if (bag.getId() == id) {
+                if ((bag.getName() == name) && (bag.getManufacturer() == manufacturer) ) {
+                    // If parameters are all equal, same bag found
+                    bag.setStockCount((bag.getStockCount() + num));
+                }
+                // Otherwise, correct bag not found, so raise exception
+                throw new BeanBagMismatchException();
             }
         }
         
@@ -95,14 +139,14 @@ public class Store implements BeanBagStore
         }
 
         // Check if a bean bag with this ID already exists
-        BeanBag existingBag = this.findBeanBag(id);
+        BeanBag existingBag = this.findBeanBag(id, manufacturer, name, num);
         
         // No ID collision; add BeanBag
         if (existingBag == null) {
             BeanBag bag = new BeanBag(num, manufacturer, name, id, year, month);
             this.beanBags.add(bag);
             return;
-        }        
+        }
         
         throw new BeanBagMismatchException();
     }
