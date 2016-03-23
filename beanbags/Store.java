@@ -47,6 +47,22 @@ public class Store implements BeanBagStore
     }
 
     /**
+    * Validate if a string is valid hexadecimal
+    * @param hex string to check
+    * @return Boolean representing validity
+    */
+    public Boolean validateHex(String hex) {
+        try {
+            Long.valueOf(hex, 16);
+            return true;
+        }
+        // Invalid hex strings throw NumberFormatException
+        catch (NumberFormatException err) {
+            return false;
+        }       
+    }
+
+    /**
      * Method adds bean bags to the store with the arguments as bean bag details.
      * <p>
      * The state of this BeanBagStore must be be unchanged if any exceptions are

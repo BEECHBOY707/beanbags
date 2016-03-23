@@ -11,15 +11,34 @@ import beanbags.*; /* want all the exceptions, the interface and
 
 public class BeanBagStoreTestApp
 {
+    public static int testCounter = 0;
+
     public static void main(String[] args) {
         TestStore();
-        System.out.println("\nTests completed");
+        System.out.printf("\n%d tests completed", testCounter);
+    }
+
+    public static void completeTest() {
+        System.out.print(".");
+        testCounter += 1;
     }
 
     public static void TestStore() {
         // Variable declaration
         BeanBag bag;
         Store store;
+
+        /*  .validateHex() - valid
+        **********************************************************************/
+        store = new Store();
+        assert store.validateHex("1234567890ABCDEF");
+        completeTest();
+
+        /*  .validateHex() - valid
+        **********************************************************************/
+        store = new Store();
+        assert store.validateHex("NOTHEX") == false;
+        completeTest();
 
 
         /*  .addBeanBags() - add valid bean bag
