@@ -9,18 +9,19 @@ package beanbags;
  */
 public class BeanBag
 {
-    private static int reservationCounter = 0;
+    private static int totalReservations = 0;
 
     private byte month;
     private int priceInPence;
+    private int reservedCount;
     private int stockCount;
+    private ObjectArrayList reservations;
+    private ObjectArrayList sales;
     private short year;
     private String id;
     private String information;
     private String manufacturer;
     private String name;  
-    private ObjectArrayList reservations;
-    private ObjectArrayList sales;
 
     /*  Constructors
     ***************************************************************************/
@@ -46,8 +47,15 @@ public class BeanBag
         this.priceInPence = -1;
     }
 
+
+    /*  Static Methods
+    **************************************************************************/
+    public static int generateReservationID() {
+        return ++BeanBag.totalReservations;
+    }
+
     /*  Getters and Setters
-    ***************************************************************************/
+    **************************************************************************/
     public byte getMonth() {
         return this.month;
     }
@@ -112,28 +120,31 @@ public class BeanBag
         this.name = value;
     }
 
+    public Boolean hasPrice() {
+        return this.priceInPence != -1;
+    }
+
     public Boolean inStock() {
         return this.availableCount() > 0;
     }
 
     public int availableCount() {
-        // Update later to subtract reserved bag count
-        return this.stockCount;
+        return this.stockCount - this.reservedCount;
     }
-    
-    /**
-     * Miscellaneous methods
-     */
-    
-    public int reserveBeanBags(int num, String id)
-    {
-        if (this.id.equals(id))
-        {
-            for ( int x = 0 ; x < num ; x++)
-            {
-                //reservedBeanBags.add(priceInPence); // Need to find a better way of inputting these two vars together ideally via a dictionary like setup
-                //reservedBeanBags.add(reservationIdCreationCounter); // Need to find a better way of inputting these two vars together ideally via a dictionary like setup
-                //reservationIdCreationCounter++;
+
+    public int getReservedCount() {
+        return this.reservedCount;
+    }
+
+    /*  Methods
+    **************************************************************************/
+    public int reserve(int quantity) {
+        int id = BeanBag.generateReservationID();
+        this.reservations.add(new Reservation(id, this.priceInPence, quantity));
+        this.reservedCount += quantity;
+        return id;
+    }
+
             }
         }
         return 0;

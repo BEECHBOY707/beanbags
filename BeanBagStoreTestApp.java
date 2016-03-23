@@ -15,6 +15,7 @@ public class BeanBagStoreTestApp
 
     public static void main(String[] args) {
         TestStore();
+        TestBeanBags();
         System.out.printf("\n%d tests completed", testCounter);
     }
 
@@ -169,7 +170,7 @@ public class BeanBagStoreTestApp
         bag.setStockCount(10);
 
         try {
-            store.reserveBeanBags(100, "1234567890ABCDEF");
+            store.reserveBeanBags(1, "1234567890ABCDEF");
             assert false : "Reservation should have thrown error";
         }
         catch (BeanBagIDNotRecognisedException err) {}
@@ -178,7 +179,52 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         } 
 
-        completeTest();        
+        completeTest();
+
+
+        /*  .reserveBeanBags() - reserve bag without set price
+        **********************************************************************/
+        try {
+            store.reserveBeanBags(1, "123");
+            assert false : "Reservation should have thrown error";
+        }
+        catch (PriceNotSetException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        } 
+
+        completeTest();
+
+
+        /*  .reserveBeanBags() - reserve bag with illegal id
+        **********************************************************************/
+        try {
+            store.reserveBeanBags(1, "NOTHEX");
+            assert false : "Reservation should have thrown error";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        } 
+
+        completeTest();
+
+
+        /*  .reserveBeanBags() - reserve a bag
+        **********************************************************************/
+        bag.setPrice(5000);
+
+        try {
+            store.reserveBeanBags(1, "123");
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest(); 
     }
 
     public static void TestBeanBags() {
@@ -199,8 +245,37 @@ public class BeanBagStoreTestApp
 
         completeTest();
 
-        /*  Test Getters and Setters
+        /*  Test Reservation ID Generator
         **********************************************************************/
+        int firstID = BeanBag.generateReservationID();
+        int secondID = BeanBag.generateReservationID();
+        assert  secondID == firstID + 1;
+        completeTest();
+
+        /*  Test Reserve
+        **********************************************************************/
+        bag.setStockCount(10);
+        int reservationID = bag.reserve(6);
+        assert bag.availableCount() == 4;
+        completeTest();
+
+        /*  Test Unreserve
+        **********************************************************************/
+        bag.unreserve(reservationID);
+        assert bag.availableCount() == 10;
+        completeTest();        
+    }
+
+    public static void TestReservation() {
+        Reservation reservation;
+
+        /*  Test Construction
+        **********************************************************************/
+        reservation = new Reservation(10, 200, 5);
+        assert reservation.getID() == 10;
+        assert reservation.getPrice() == 200;
+        assert reservation.getQuantity() == 5;
+        completeTest();
 
     }
 }

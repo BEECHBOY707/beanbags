@@ -165,6 +165,10 @@ public class Store implements BeanBagStore
             throw new IllegalNumberOfBeanBagsReservedException();
         }
 
+        if (!this.validateHex(id)) {
+            throw new IllegalIDException();
+        }
+
         BeanBag beanbag = this.findBeanBag(id);
 
         if (beanbag == null) {
@@ -179,7 +183,11 @@ public class Store implements BeanBagStore
             throw new InsufficientStockException();
         }
 
-        return 0;
+        if (!beanbag.hasPrice()) {
+            throw new PriceNotSetException();
+        }
+
+        return beanbag.reserve(quantity);
     }
 
     public void unreserveBeanBags(int reservationNumber)
