@@ -175,6 +175,10 @@ public class Store implements BeanBagStore
         if (!bag.inStock()) {
             throw new BeanBagNotInStockException();
         }
+
+        if (bag.availableCount() < num) {
+            throw new InsufficientStockException();
+        }
     }
 
     /**

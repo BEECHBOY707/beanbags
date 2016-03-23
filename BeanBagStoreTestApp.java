@@ -275,7 +275,24 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         }
 
-        completeTest();        
+        completeTest();
+
+
+        /*  .sellBeanBags() - bean bag has insufficient stock
+        **********************************************************************/
+        bag.setStockCount(5);
+
+        try {
+            store.sellBeanBags(10, "123");
+            assert false : "Sale should have thrown error";
+        }
+        catch (InsufficientStockException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();    
     }
 
     public static void TestBeanBags() {
