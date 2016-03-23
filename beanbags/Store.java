@@ -96,16 +96,10 @@ public class Store implements BeanBagStore
             throw new IllegalNumberOfBeanBagsAddedException();
         }
         
-        // Ensure ID string is valid hexadecimal
-        try {
-            // Attempt to convert hex to long
-            Long.valueOf(id, 16);
-        }
-        // Invalid hex strings throw NumberFormatException
-        catch (NumberFormatException err) {
+        if (!this.validateHex(id)) {
             throw new IllegalIDException();
         }
-        
+
         // Check if a bean bag with this ID already exists
         BeanBag existingBag = this.findBeanBag(id);
         
