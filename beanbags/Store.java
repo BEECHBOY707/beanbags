@@ -116,13 +116,13 @@ public class Store implements BeanBagStore
      *                           hexadecimal number
      * @throws InvalidMonthException    if the month is not in the range 1 to 12
      */
-    public void addBeanBags(int num, String manufacturer, String name, 
-                            String id, short year, byte month)
-        throws IllegalNumberOfBeanBagsAddedException,
-               BeanBagMismatchException,
-               IllegalIDException,
-               InvalidMonthException { 
-        
+    public void addBeanBags(int num, String manufacturer, String name, String id, short year, byte month)
+    throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException, IllegalIDException, InvalidMonthException {
+        this.addBeanBags(num, manufacturer, name, id, year, month, "");
+    }
+
+    public void addBeanBags(int num, String manufacturer, String name, String id, short year, byte month, String information)
+    throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException, IllegalIDException, InvalidMonthException {
         // Ensure we are trying to add a legal number of beanbags
         if (num < 1) {
             throw new IllegalNumberOfBeanBagsAddedException();
@@ -143,19 +143,16 @@ public class Store implements BeanBagStore
         }
 
         // Check if we are able to merge with an existing bean bag
-        if (existingBag.getName() == name && existingBag.getManufacturer() == manufacturer) {
+        if (existingBag.getName() == name &&
+            existingBag.getManufacturer() == manufacturer &&
+            existingBag.getInformation() == information) {
             // If parameters are all equal, same bag found
             existingBag.setStockCount((existingBag.getStockCount() + num));
         }
         
         // Otherwise, correct bag not found, so raise exception
-        throw new BeanBagMismatchException();
-    }
-
-    public void addBeanBags(int num, String manufacturer, String name, 
-    String id, short year, byte month, String information)
-    throws IllegalNumberOfBeanBagsAddedException, BeanBagMismatchException,
-    IllegalIDException, InvalidMonthException { }
+        throw new BeanBagMismatchException();           
+   }
 
     public void setBeanBagPrice(String id, int priceInPence) 
     throws InvalidPriceException, BeanBagIDNotRecognisedException, IllegalIDException { }
