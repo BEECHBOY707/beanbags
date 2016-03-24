@@ -481,6 +481,16 @@ public class BeanBagStoreTestApp
         }
 
         assert store.getTotalPriceOfReservedBeanBags() == 1000;
+
+        completeTest();
+
+
+        /*  .empty())
+        **********************************************************************/        
+        assert store.getBeanBagsArray().size() != 0;
+        store.empty();
+        assert store.getBeanBagsArray().size() == 0;
+        completeTest();
     }
 
     public static void TestBeanBags() {
@@ -557,6 +567,7 @@ public class BeanBagStoreTestApp
         bag.reset();
         assert bag.getSoldCount() == 0;
         assert bag.getSoldValue() == 0;
+        completeTest();
 
 
         /* Test Empty
@@ -568,6 +579,7 @@ public class BeanBagStoreTestApp
         assert bag.getReservedCount() == 0;
         assert bag.getStockCount() == 0;
         assert bag.getReservations().size() == 0;
+        completeTest();
 
 
         /*  Test Get Reservation Value
@@ -576,8 +588,8 @@ public class BeanBagStoreTestApp
         bag.setStockCount(10);
         bag.setPrice(10);
         bag.reserve(4);
-
         assert bag.getReservationValue() == 40 : "Reservation price incorrect";
+        completeTest();
 
 
         /*  Test Reservation Pricing
@@ -586,6 +598,7 @@ public class BeanBagStoreTestApp
         assert bag.getReservationValue() == 40 : "Reservation price has increased";
         bag.setPrice(5);
         assert bag.getReservationValue() == 20 : "Reservation price has not decreased";
+        completeTest();
     }
 
     public static void TestReservation() {
@@ -663,6 +676,7 @@ public class BeanBagStoreTestApp
 
         assert bag1.getSoldCount() == 10;
         assert bag1.getReservedCount() == 5;
+        completeTest();
 
         /*  Serialise
         **********************************************************************/
@@ -695,6 +709,7 @@ public class BeanBagStoreTestApp
 
         assert bag0 != null : "Bag 0 is null";
         assert bag1 != null : "Bag 1 is null";
+        completeTest();
 
         bag0.setPrice(50);
         bag1.setPrice(100);
@@ -704,5 +719,6 @@ public class BeanBagStoreTestApp
 
         assert bag1.getSoldCount() == 10;
         assert bag1.getReservedCount() == 5;
+        completeTest();
     }
 }
