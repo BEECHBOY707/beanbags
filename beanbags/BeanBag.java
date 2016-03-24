@@ -141,8 +141,28 @@ public class BeanBag
         return this.soldCount;
     }
 
+    public int getReservationValue() {
+        int totalValue = 0;
+
+        for (int i=0; i < this.reservations.size(); i++){
+            Reservation reservation = (Reservation) this.reservations.get(i);
+            totalValue += reservation.getValue();
+        }
+
+        return totalValue;
+    }
+
     /*  Methods
     **************************************************************************/
+    public void empty() {
+        this.priceInPence = -1;
+        this.reservedCount = 0;
+        this.soldCount = 0;
+        this.stockCount = 0;
+        this.reservations = new ObjectArrayList();
+        this.sales = new ObjectArrayList();
+    }
+
     public void sell(int quantity) {
         Sale sale = new Sale(this.priceInPence, quantity);
         this.sales.add(sale);
@@ -184,4 +204,5 @@ public class BeanBag
 
         return false;
     }
+
 }

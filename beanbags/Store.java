@@ -340,7 +340,16 @@ public class Store implements BeanBagStore
     public int getTotalPriceOfSoldBeanBags(String id) throws
     BeanBagIDNotRecognisedException, IllegalIDException { return 0; }
 
-    public int getTotalPriceOfReservedBeanBags() { return 0; }
+    public int getTotalPriceOfReservedBeanBags() {
+        int totalValue = 0;
+
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            totalValue += bag.getReservationValue();
+        }
+
+        return totalValue;
+    }
 
     public String getBeanBagDetails(String id) throws
     BeanBagIDNotRecognisedException, IllegalIDException { return ""; }

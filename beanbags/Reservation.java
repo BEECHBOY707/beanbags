@@ -25,4 +25,11 @@ public class Reservation
     public int getQuantity() {
         return this.quantity;
     }
+
+    /**
+     *  Calculate value of reservation
+    */
+    public int getValue() {
+        return this.priceInPence * this.quantity;
+    }
 }

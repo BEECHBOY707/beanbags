@@ -452,7 +452,33 @@ public class BeanBagStoreTestApp
 
         assert bag.getPrice() == 1000 : "Bag price was not set properly";
 
-        completeTest();  
+        completeTest();
+
+
+        /*  .getTotalPriceOfReservedBeanBags()
+        **********************************************************************/
+        store = new Store();
+
+        try {
+            store.addBeanBags(10, "", "", "500", (short)2016, (byte)02);
+            store.setBeanBagPrice("500", 500);
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception occurred";
+        }
+
+        assert store.getTotalPriceOfReservedBeanBags() == 0;
+
+        try {
+            store.reserveBeanBags(2, "500");
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception occurred";
+        }
+
+        assert store.getTotalPriceOfReservedBeanBags() == 1000;
     }
 
     public static void TestBeanBags() {
@@ -522,6 +548,24 @@ public class BeanBagStoreTestApp
 
         completeTest();
 
+
+        /* Test Empty
+        **********************************************************************/
+        bag.empty();
+        assert bag.getPrice() == -1;
+        assert bag.getReservedCount() == 0;
+        assert bag.getSoldCount() == 0;
+        assert bag.getStockCount() == 0;
+
+
+        /*  Test Get Reservation Value
+        **********************************************************************/
+        bag.empty();
+        bag.setStockCount(10);
+        bag.setPrice(10);
+        bag.reserve(4);
+
+        assert bag.getReservationValue() == 40 : "Reservation price incorrect";
     }
 
     public static void TestReservation() {
@@ -535,5 +579,8 @@ public class BeanBagStoreTestApp
         assert reservation.getQuantity() == 5;
         completeTest();
 
+        /*  Test getValue()
+        **********************************************************************/
+        assert reservation.getValue() == 1000 : "Reservation value incorrect";
     }
 }
