@@ -380,25 +380,29 @@ public class BeanBagStoreTestApp
 
         completeTest();
 
+
         /*  Test Reservation ID Generator
         **********************************************************************/
         int firstID = BeanBag.generateReservationID();
         int secondID = BeanBag.generateReservationID();
-        assert  secondID == firstID + 1;
+        assert secondID == firstID + 1 : "Unexpected ID generated";
         completeTest();
+
 
         /*  Test Reserve
         **********************************************************************/
         bag.setStockCount(10);
         int reservationID = bag.reserve(6);
-        assert bag.availableCount() == 4;
+        assert bag.availableCount() == 4 : "Reserved bags still show available";
         completeTest();
+
 
         /*  Test Unreserve
         **********************************************************************/
         bag.unreserve(reservationID);
-        assert bag.availableCount() == 10;
+        assert bag.availableCount() == 10 : "Unreserve not increasing available bag count";
         completeTest();
+
 
         /*  Test Sell
         **********************************************************************/
@@ -411,6 +415,20 @@ public class BeanBagStoreTestApp
         assert bag.getSoldCount() == sold+1;
 
         completeTest();
+
+
+        /*  Test Sell Reservation
+        **********************************************************************/
+        bag.setStockCount(10);
+        reservationID = bag.reserve(4);
+        int oldSales = bag.getSoldCount();
+       
+        assert bag.sellReservation(reservationID) : "Reservation sale failed";
+        assert bag.availableCount() == 6 : "Sale did not change available count";
+        assert bag.getSoldCount() - oldSales == 4 : "Sale did not change sold count";
+
+        completeTest();
+
     }
 
     public static void TestReservation() {

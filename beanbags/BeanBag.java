@@ -150,6 +150,20 @@ public class BeanBag
         this.soldCount += quantity;
     }
 
+    public Boolean sellReservation(int reservationID) {
+        for (int i=0; i < this.reservations.size(); i++){
+            Reservation reservation = (Reservation) this.reservations.get(i);
+            if (reservation.getID() == reservationID) {
+                this.sell(reservation.getQuantity());
+                this.reservedCount -= reservation.getQuantity();
+                this.reservations.remove(reservation);                
+                return true;
+            }
+        }
+
+        return false;        
+    }
+
     public int reserve(int quantity) {
         int id = BeanBag.generateReservationID();
         this.reservations.add(new Reservation(id, this.priceInPence, quantity));
