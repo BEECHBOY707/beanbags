@@ -303,7 +303,7 @@ public class Store implements BeanBagStore, Serializable
 
     public int reservedBeanBagsInStock() { 
     int reservedBeanBagsInStockCount = 0;
-        // Iterate all bean bags and add the number that si reserved to variable
+        // Iterate all bean bags and add the number that is reserved to variable
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
             reservedBeanBagsInStockCount = reservedBeanBagsInStockCount + bag.getReservedCount();
@@ -374,10 +374,32 @@ public class Store implements BeanBagStore, Serializable
         return this.beanBags.size();
     }
 
-    public int getNumberOfSoldBeanBags() { return 0; }
+    public int getNumberOfSoldBeanBags() { 
+        // Inititate beanBagsSoldCount variable 
+        int beanBagsSoldCount = 0;
+        // Iterate all bean bags and add the number of them to variable
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            beanBagsSoldCount = beanBagsSoldCount + bag.getSoldCount();
+        }
+        // Return the total number of BeanBags sold after iteration
+        return beanBagsSoldCount;
+    }
 
     public int getNumberOfSoldBeanBags(String id) throws
-    BeanBagIDNotRecognisedException, IllegalIDException { return 0; }
+    BeanBagIDNotRecognisedException, IllegalIDException { 
+        // Ensure ID legal
+        if (!validateHex(id)) {
+            throw new IllegalIDException();
+        }
+        BeanBag bag = this.findBeanBag(id);
+        // Ensure ID's object exists
+        if (bag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+        // Return the number of BeanBags sold for the object of given ID
+        return bag.getSoldCount();
+    }
 
     public int getTotalPriceOfSoldBeanBags() { return 0; }
 
@@ -396,7 +418,23 @@ public class Store implements BeanBagStore, Serializable
     }
 
     public String getBeanBagDetails(String id) throws
-    BeanBagIDNotRecognisedException, IllegalIDException { return ""; }
+    BeanBagIDNotRecognisedException, IllegalIDException {
+        
+        if (!validateHex(id)) {
+            throw new IllegalIDException();
+        }
+        BeanBag bag = this.findBeanBag(id);
+        if (bag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+        if ( bag.getId() != null ) {
+            String beanBagDetails = "BeanBag ID: " + bag.getId() + ", BeanBag Manufacturer: " + bag.getManufacturer() + ", BeanBag Name: " + bag.getName() + ", BeanBag Year: " + bag.getYear() + ", BeanBag Stock Count: " + bag.getStockCount() + ", BeanBag Reserved Count: " + bag.getReservedCount() + ", BeanBag Sold stock Count: " + bag.getSoldCount() + ", BeanBag Product price: " + bag.getPrice();
+            return beanBagDetails;
+        }
+        else {
+            return ""; 
+        }
+    }
 
     public void empty() {
         // Clear all objects from BeanBags object array list by iterating through list
