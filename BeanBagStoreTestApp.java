@@ -53,7 +53,7 @@ public class BeanBagStoreTestApp
             assert store.getBeanBagsArray().size() == 1;
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -70,7 +70,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalNumberOfBeanBagsAddedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -88,7 +88,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalIDException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -126,7 +126,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalNumberOfBeanBagsReservedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         } 
 
@@ -143,7 +143,7 @@ public class BeanBagStoreTestApp
         }
         catch (BeanBagNotInStockException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         } 
 
@@ -160,7 +160,7 @@ public class BeanBagStoreTestApp
         }
         catch (InsufficientStockException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         } 
 
@@ -177,7 +177,7 @@ public class BeanBagStoreTestApp
         }
         catch (BeanBagIDNotRecognisedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         } 
 
@@ -192,7 +192,7 @@ public class BeanBagStoreTestApp
         }
         catch (PriceNotSetException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         } 
 
@@ -207,7 +207,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalIDException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         } 
 
@@ -223,7 +223,7 @@ public class BeanBagStoreTestApp
             reservationID = store.reserveBeanBags(1, "123");
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -239,7 +239,7 @@ public class BeanBagStoreTestApp
             store.unreserveBeanBags(reservationID);
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -256,7 +256,7 @@ public class BeanBagStoreTestApp
         }
         catch (ReservationNumberNotRecognisedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -273,7 +273,7 @@ public class BeanBagStoreTestApp
         }
         catch (BeanBagNotInStockException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -290,7 +290,7 @@ public class BeanBagStoreTestApp
         }
         catch (InsufficientStockException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -305,7 +305,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalNumberOfBeanBagsSoldException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -327,7 +327,7 @@ public class BeanBagStoreTestApp
         }
         catch (PriceNotSetException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -342,7 +342,7 @@ public class BeanBagStoreTestApp
         }
         catch (BeanBagIDNotRecognisedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -357,7 +357,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalIDException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -372,7 +372,7 @@ public class BeanBagStoreTestApp
         }
         catch (ReservationNumberNotRecognisedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -388,7 +388,7 @@ public class BeanBagStoreTestApp
             store.sellBeanBags(reservationID);
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -405,7 +405,7 @@ public class BeanBagStoreTestApp
         }
         catch (IllegalIDException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -420,7 +420,7 @@ public class BeanBagStoreTestApp
         }
         catch (BeanBagIDNotRecognisedException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -435,7 +435,7 @@ public class BeanBagStoreTestApp
         }
         catch (InvalidPriceException err) {}
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -448,7 +448,7 @@ public class BeanBagStoreTestApp
             store.setBeanBagPrice("123", 1000);
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -466,7 +466,7 @@ public class BeanBagStoreTestApp
             store.setBeanBagPrice("500", 500);
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception occurred";
         }
 
@@ -476,7 +476,7 @@ public class BeanBagStoreTestApp
             store.reserveBeanBags(2, "500");
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception occurred";
         }
 
@@ -596,7 +596,7 @@ public class BeanBagStoreTestApp
             store.addBeanBags(20, "", "", "1", (short)2016, (byte)02);
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -620,7 +620,7 @@ public class BeanBagStoreTestApp
             store.reserveBeanBags(5, "1");
         }
         catch (Exception err) {
-            err.printStackTrace();
+            err.printStackTrace();;
             assert false : "Unexpected exception thrown";
         }        
 
@@ -638,7 +638,7 @@ public class BeanBagStoreTestApp
             store.saveStoreContents("output.ser");
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
@@ -652,7 +652,7 @@ public class BeanBagStoreTestApp
             store.loadStoreContents("output.ser");
         }
         catch (Exception err) {
-            err.printStackTrace()
+            err.printStackTrace();
             assert false : "Unexpected exception thrown";
         }
 
