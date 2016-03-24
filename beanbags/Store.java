@@ -349,10 +349,31 @@ public class Store implements BeanBagStore
     public String getBeanBagDetails(String id) throws
     BeanBagIDNotRecognisedException, IllegalIDException { return ""; }
 
-    public void empty() { }
+    public void empty() {
+        // Clear all objects from BeanBags object array list by iterating through list
+        for (int i=0; i < this.beanBags.size(); i++){
+            // Use ObjectArrayList method to remove the front element of the list each time
+            this.beanBags.remove(0);
+        }
+    }
      
     public void resetSaleAndCostTracking() { }
      
     public void replace(String oldId, String replacementId) 
-    throws BeanBagIDNotRecognisedException, IllegalIDException { }
+    throws BeanBagIDNotRecognisedException, IllegalIDException {
+        if ( validateHex(oldId) ) { // Ensure ID is legal
+            try {
+                // Find BeanBag and set it
+                BeanBag existingBag = this.findBeanBag(oldId);
+                // Set new ID
+                existingBag.setId(replacementId);
+            }
+            catch (RuntimeException err) {
+                throw new BeanBagIDNotRecognisedException();
+            }
+        }
+        else {
+            throw new IllegalIDException();
+        }
+    }
 }
