@@ -275,7 +275,17 @@ public class Store implements BeanBagStore
     }
 
     public void sellBeanBags(int reservationNumber)
-    throws ReservationNumberNotRecognisedException { }
+    throws ReservationNumberNotRecognisedException {
+        // Iterate all bean bags and try to unreserve
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            if (bag.sellReservation(reservationNumber)) {
+                return;
+            }
+        }
+
+        throw new ReservationNumberNotRecognisedException();
+    }
 
     public int beanBagsInStock() { return 0; }
 

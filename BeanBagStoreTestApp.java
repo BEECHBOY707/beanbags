@@ -359,7 +359,40 @@ public class BeanBagStoreTestApp
             assert false : "Unexpected exception thrown";
         }
 
-        completeTest();        
+        completeTest();
+
+
+        /*  .sellBeanBags() - invalid reservation number
+        **********************************************************************/
+        try {
+            store.sellBeanBags(9999);
+            assert false : "Sale should have thrown error";
+        }
+        catch (ReservationNumberNotRecognisedException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
+
+
+        /*  .sellBeanBags() - successful sale
+        **********************************************************************/
+        int oldSales = bag.getSoldCount();
+
+        try {
+            reservationID = store.reserveBeanBags(1, "123");
+            store.sellBeanBags(reservationID);
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        assert bag.getSoldCount() - oldSales == 1;
+
+        completeTest();
     }
 
     public static void TestBeanBags() {
