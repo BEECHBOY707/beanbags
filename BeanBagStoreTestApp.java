@@ -103,6 +103,23 @@ public class BeanBagStoreTestApp
         completeTest();
 
 
+        /*  .addBeanBags() - invalid month
+        **********************************************************************/
+        store = new Store();
+
+        try {
+            store.addBeanBags(1, "", "", "123", (short)2016, (byte)100);
+            assert false : "InvalidMonthException not raised";        
+        }
+        catch (InvalidMonthException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();        
+
+
         /*  .findBeanBag() - search for non-existent bag
         **********************************************************************/
         store = new Store();

@@ -21,7 +21,6 @@ public class Store implements BeanBagStore, Serializable
         this.beanBags = new ObjectArrayList();    
     }
 
-
     /**
      *  @return     bean bags ObjectArrayList
      */
@@ -74,13 +73,15 @@ public class Store implements BeanBagStore, Serializable
      * @param id                ID of bean bag 
      * @param year              year of manufacture
      * @param month             month of manufacture
-     * @throws IllegalNumberOfBeanBagsAddedException    if num < 1
-     * @throws BeanBagMismatchException     if a bean bag with this ID already
-     *      exists but other stored elements (manufacturer, name and free text)
-     *      do not match
-     * @throws IllegalIDException   if the ID is not a positive eight character 
-     *      hexadecimal number
-     * @throws InvalidMonthException    if the month is not in the range 1 to 12
+     * @throws IllegalNumberOfBeanBagsAddedException
+     *      If num < 1
+     * @throws BeanBagMismatchException
+     *      If a bean bag with this ID already exists but other stored elements
+     *      (manufacturer, name and free text) do not match
+     * @throws IllegalIDException
+     *      If the ID is not a positive eight character hexadecimal number
+     * @throws InvalidMonthException
+     *      If the month is not in the range 1 to 12
      */
     public void addBeanBags(int num, String manufacturer, String name,
                             String id, short year, byte month)
@@ -100,13 +101,15 @@ public class Store implements BeanBagStore, Serializable
      * @param year              year of manufacture
      * @param month             month of manufacture
      * @param information       descriptive text
-     * @throws IllegalNumberOfBeanBagsAddedException    if num < 1
-     * @throws BeanBagMismatchException     if a bean bag with this ID already
-     *      exists but other stored elements (manufacturer, name and free text)
-     *      do not match
-     * @throws IllegalIDException   if the ID is not a positive eight character 
-     *      hexadecimal number
-     * @throws InvalidMonthException    if the month is not in the range 1 to 12
+     * @throws IllegalNumberOfBeanBagsAddedException
+     *      If num < 1
+     * @throws BeanBagMismatchException
+     *      If a bean bag with this ID already exists but other stored elements
+     *      (manufacturer, name and free text) do not match
+     * @throws IllegalIDException
+     *      If the ID is not a positive eight character hexadecimal number
+     * @throws InvalidMonthException
+     *      If the month is not in the range 1 to 12
      */
     public void addBeanBags(int num, String manufacturer, String name,
                             String id, short year, byte month,
@@ -117,6 +120,11 @@ public class Store implements BeanBagStore, Serializable
         // Ensure we are trying to add a legal number of beanbags
         if (num < 1) {
             throw new IllegalNumberOfBeanBagsAddedException();
+        }
+
+        // Validate month
+        if (month < (byte)1 || (byte)12 < month ) {
+            throw new InvalidMonthException();
         }
         
         if (!this.validateHex(id)) {
