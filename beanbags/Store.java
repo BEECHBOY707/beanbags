@@ -625,20 +625,24 @@ public class Store implements BeanBagStore, Serializable
      *      number, or the replacementID is already in use in the store
      */     
     public void replace(String oldId, String replacementId) 
-    throws BeanBagIDNotRecognisedException, IllegalIDException {
-        if ( validateHex(oldId) ) { // Ensure ID is legal
-            try {
-                // Find BeanBag and set it
-                BeanBag existingBag = this.findBeanBag(oldId);
-                // Set new ID
-                existingBag.setId(replacementId);
-            }
-            catch (RuntimeException err) {
-                throw new BeanBagIDNotRecognisedException();
-            }
-        }
-        else {
+    throws BeanBagIDNotRecognisedException, IllegalIDException {   
+
+        if (!validateHex(oldId) || !validateHex(replacementId)) {
             throw new IllegalIDException();
         }
+
+        BeanBag oldBag = this.findBeanBag(oldId);
+        if (oldBag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+
+        BeanBag newBag = this.findBeanBag(replacementId);
+        // New ID already in use
+        if (newBag != null) {
+            throw new IllegalIDException();
+        }
+
+        // Update ID
+        oldBag.setId(replacementId);
     }
 }

@@ -510,12 +510,101 @@ public class BeanBagStoreTestApp
         completeTest();
 
 
-        /*  .empty())
+        /*  .empty()
         **********************************************************************/        
         assert store.getBeanBagsArray().size() != 0;
         store.empty();
         assert store.getBeanBagsArray().size() == 0;
         completeTest();
+
+        /*  .replace() - valid
+        **********************************************************************/        
+        store.empty();
+        try {
+            store.addBeanBags(1, "", "", "123", (short)2016, (byte)02);
+            store.addBeanBags(1, "", "", "789", (short)2016, (byte)02);
+            bag = store.findBeanBag("123");
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+
+        try {
+            store.replace("123", "456");
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+
+        assert bag.getId() == "456" : "Bean bag ID was not replaced";
+        completeTest();
+
+        /*  .replace() - old ID doesn't exist
+        **********************************************************************/        
+        try {
+            store.replace("321", "789");
+            assert false : "BeanBagIDNotRecognisedException not thrown";
+        }
+        catch (BeanBagIDNotRecognisedException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+        completeTest();        
+
+        /*  .replace() - new ID in use
+        **********************************************************************/        
+        try {
+            store.replace("456", "789");
+            assert false : "IllegalIDException not thrown";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+        completeTest();
+
+        /*  .replace() - invalid old hex
+        **********************************************************************/        
+        try {
+            store.replace("NOTHEX", "ABC");
+            assert false : "IllegalIDException not thrown";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+        completeTest();
+
+        /*  .replace() - invalid new hex
+        **********************************************************************/        
+        try {
+            store.replace("456", "NOTHEX");
+            assert false : "IllegalIDException not thrown";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+        completeTest();
+
+        /*  .replace() - new ID in use
+        **********************************************************************/        
+        // try {
+        //     store.replace("456", "789");
+        //     assert false : "IllegalIDException not thrown";
+        // }
+        // catch (IllegalIDException err) {}
+        // catch (Exception err) {
+        //     err.printStackTrace();
+        //     assert false : "Unexpected exception occurred";
+        // }
+        // completeTest();   
     }
 
     public static void TestBeanBags() {
