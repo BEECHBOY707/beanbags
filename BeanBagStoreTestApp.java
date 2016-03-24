@@ -33,14 +33,23 @@ public class BeanBagStoreTestApp
         /*  .validateHex() - valid
         **********************************************************************/
         store = new Store();
-        assert store.validateHex("1234567890ABCDEF");
+        assert store.validateHex("1234567890ABCDEF") :
+            "Valid hex failed validation";
         completeTest();
 
-        /*  .validateHex() - valid
+        /*  .validateHex() - invalid (not hex)
         **********************************************************************/
         store = new Store();
-        assert store.validateHex("NOTHEX") == false;
+        assert store.validateHex("NOTHEX") == false :
+            "Invalid hex passed validation";
         completeTest();
+
+        /*  .validateHex() - invalid (negative)
+        **********************************************************************/
+        store = new Store();
+        assert store.validateHex("-1") == false :
+            "Negative hex value passed validation";
+        completeTest();        
 
 
         /*  .addBeanBags() - add valid bean bag

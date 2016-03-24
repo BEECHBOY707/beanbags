@@ -50,20 +50,19 @@ public class Store implements BeanBagStore, Serializable
     }
 
     /**
-    * Check if a string is valid hexadecimal
+    * Check if a string is valid, positive hexadecimal number
     *
     * @param hex    string to check
     * @return       Boolean representing validity
     */
     public Boolean validateHex(String hex) {
         try {
-            Long.valueOf(hex, 16);
-            return true;
+            return Long.valueOf(hex, 16) >= 0L;
         }
-        // Invalid hex strings throw NumberFormatException
+        // Hex string was invalid
         catch (NumberFormatException err) {
             return false;
-        }       
+        }
     }
 
     /**
