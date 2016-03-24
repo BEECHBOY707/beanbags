@@ -42,7 +42,9 @@ public class Store implements BeanBagStore, Serializable
         // Iterate BeanBag array searching for the ID
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
-            if (bag.getId() == id) {
+
+            if (bag.getId().equals(id)) {
+                System.out.print("Returning bag!");
                 return bag;
             }
         }
@@ -116,9 +118,9 @@ public class Store implements BeanBagStore, Serializable
         }
 
         // Check if we are able to merge with an existing bean bag
-        if (existingBag.getName() == name &&
-            existingBag.getManufacturer() == manufacturer &&
-            existingBag.getInformation() == information) {
+        if (existingBag.getName().equals(name) &&
+            existingBag.getManufacturer().equals(manufacturer) &&
+            existingBag.getInformation().equals(information)) {
             // If parameters are all equal, same bag found
             existingBag.setStockCount((existingBag.getStockCount() + num));
         }
