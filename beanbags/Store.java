@@ -401,10 +401,32 @@ public class Store implements BeanBagStore, Serializable
         return bag.getSoldCount();
     }
 
-    public int getTotalPriceOfSoldBeanBags() { return 0; }
+    public int getTotalPriceOfSoldBeanBags() { 
+        // Inititate beanBagsSoldCount variable 
+        int beanBagsSoldPriceCount = 0;
+        // Iterate all bean bags and add the price of them to variable
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            beanBagsSoldPriceCount = beanBagsSoldPriceCount + bag.getSoldValue();
+        }
+        // Return the total price of BeanBags sold after iteration
+        return beanBagsSoldPriceCount;
+    }
 
     public int getTotalPriceOfSoldBeanBags(String id) throws
-    BeanBagIDNotRecognisedException, IllegalIDException { return 0; }
+    BeanBagIDNotRecognisedException, IllegalIDException { 
+        // Validate that the ID provided is valid
+        if (!this.validateHex(id)) {
+            throw new IllegalIDException();
+        }
+        BeanBag existingBag = this.findBeanBag(id);
+        // If no BeanBag by that ID was found, raise exception
+        if (existingBag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+        // Return the total price of sold BeanBags of a given BeanBag type
+        return existingBag.getSoldValue();
+    }
 
     public int getTotalPriceOfReservedBeanBags() {
         int totalValue = 0;
