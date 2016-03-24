@@ -287,7 +287,7 @@ public class BeanBag implements Serializable
                 this.sell(reservation.getPrice(), reservation.getQuantity());
 
                 this.reservedCount -= reservation.getQuantity();
-                this.reservations.remove(reservation);                
+                this.reservations.remove(i);                
                 return true;
             }
         }
@@ -318,7 +318,7 @@ public class BeanBag implements Serializable
             Reservation reservation = (Reservation) this.reservations.get(i);
             if (reservation.getID() == reservationID) {
                 this.reservedCount -= reservation.getQuantity();
-                this.reservations.remove(reservation);
+                this.reservations.remove(i);
                 return true;
             }
         }
