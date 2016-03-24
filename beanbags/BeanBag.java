@@ -15,10 +15,10 @@ public class BeanBag implements Serializable
     private byte month;
     private int priceInPence;
     private int reservedCount;
+    private int soldValue;
     private int soldCount;
     private int stockCount;
     private ObjectArrayList reservations;
-    private ObjectArrayList sales;
     private short year;
     private String id;
     private String information;
@@ -45,7 +45,6 @@ public class BeanBag implements Serializable
         this.information = information;
 
         this.reservations = new ObjectArrayList();
-        this.sales = new ObjectArrayList();
         this.priceInPence = -1;
     }
 
@@ -60,10 +59,6 @@ public class BeanBag implements Serializable
     **************************************************************************/
     public ObjectArrayList getReservations() {
         return this.reservations;
-    }
-
-    public ObjectArrayList getSales() {
-        return this.sales;
     }
 
     public byte getMonth() {
@@ -150,6 +145,10 @@ public class BeanBag implements Serializable
         return this.soldCount;
     }
 
+    public int getSoldValue() {
+        return this.soldValue;
+    }
+
     public int getReservationValue() {
         int totalValue = 0;
 
@@ -169,12 +168,11 @@ public class BeanBag implements Serializable
         this.soldCount = 0;
         this.stockCount = 0;
         this.reservations = new ObjectArrayList();
-        this.sales = new ObjectArrayList();
     }
 
     public void sell(int quantity) {
         Sale sale = new Sale(this.priceInPence, quantity);
-        this.sales.add(sale);
+        this.soldValue += this.priceInPence * quantity;
         this.stockCount -= quantity;
         this.soldCount += quantity;
     }
