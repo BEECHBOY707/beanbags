@@ -350,7 +350,7 @@ public class Store implements BeanBagStore, Serializable
         // Iterate all bean bags and add the number of them to variable
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
-            beanBagsInStockCount = beanBagsInStockCount + bag.getStockCount();
+            beanBagsInStockCount += bag.getStockCount();
         }
         // Return the total number of BeanBags in stock after iteration
         return beanBagsInStockCount;
@@ -367,7 +367,7 @@ public class Store implements BeanBagStore, Serializable
         // Iterate all bean bags and add the number that is reserved to variable
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
-            reservedBeanBagsInStockCount = reservedBeanBagsInStockCount + bag.getReservedCount();
+            reservedBeanBagsInStockCount += bag.getReservedCount();
         }
         // Return the total number of reserved BeanBags in stock after iteration
         return reservedBeanBagsInStockCount;
@@ -470,15 +470,15 @@ public class Store implements BeanBagStore, Serializable
      * @return      number of bean bags sold by the store
      */
     public int getNumberOfSoldBeanBags() { 
-        // Inititate beanBagsSoldCount variable 
-        int beanBagsSoldCount = 0;
-        // Iterate all bean bags and add the number of them to variable
+        int totalSold = 0;
+
+        // Iterate bean bags and sum sales count
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
-            beanBagsSoldCount = beanBagsSoldCount + bag.getSoldCount();
+            totalSold = totalSold + bag.getSoldCount();
         }
         // Return the total number of BeanBags sold after iteration
-        return beanBagsSoldCount;
+        return totalSold;
     }
 
     /**
@@ -512,15 +512,15 @@ public class Store implements BeanBagStore, Serializable
      * @return      total cost of bean bags sold (in pence)
      */
     public int getTotalPriceOfSoldBeanBags() { 
-        // Inititate beanBagsSoldCount variable 
-        int beanBagsSoldPriceCount = 0;
-        // Iterate all bean bags and add the price of them to variable
+        int totalPrice = 0;
+        
+        // Iterate bean bags and sum sales value
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
-            beanBagsSoldPriceCount = beanBagsSoldPriceCount + bag.getSoldValue();
+            totalPrice += bag.getSoldValue();
         }
         // Return the total price of BeanBags sold after iteration
-        return beanBagsSoldPriceCount;
+        return totalPrice;
     }
 
     /**
@@ -556,6 +556,7 @@ public class Store implements BeanBagStore, Serializable
     public int getTotalPriceOfReservedBeanBags() {
         int totalValue = 0;
 
+        // Iterate bean bags and sum reservation values
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
             totalValue += bag.getReservationValue();
