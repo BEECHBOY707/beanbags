@@ -577,21 +577,18 @@ public class Store implements BeanBagStore, Serializable
      */
     public String getBeanBagDetails(String id)
     throws BeanBagIDNotRecognisedException, IllegalIDException {
-        
+
         if (!validateHex(id)) {
             throw new IllegalIDException();
         }
+
         BeanBag bag = this.findBeanBag(id);
+
         if (bag == null) {
             throw new BeanBagIDNotRecognisedException();
         }
-        if ( bag.getId() != null ) {
-            String beanBagDetails = "BeanBag ID: " + bag.getId() + ", BeanBag Manufacturer: " + bag.getManufacturer() + ", BeanBag Name: " + bag.getName() + ", BeanBag Year: " + bag.getYear() + ", BeanBag Stock Count: " + bag.getStockCount() + ", BeanBag Reserved Count: " + bag.getReservedCount() + ", BeanBag Sold stock Count: " + bag.getSoldCount() + ", BeanBag Product price: " + bag.getPrice();
-            return beanBagDetails;
-        }
-        else {
-            return ""; 
-        }
+
+        return bag.getInformation();
     }
 
     /**

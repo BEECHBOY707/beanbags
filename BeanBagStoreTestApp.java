@@ -593,18 +593,71 @@ public class BeanBagStoreTestApp
         }
         completeTest();
 
-        /*  .replace() - new ID in use
-        **********************************************************************/        
-        // try {
-        //     store.replace("456", "789");
-        //     assert false : "IllegalIDException not thrown";
-        // }
-        // catch (IllegalIDException err) {}
-        // catch (Exception err) {
-        //     err.printStackTrace();
-        //     assert false : "Unexpected exception occurred";
-        // }
-        // completeTest();   
+        /*  .getBeanBagDetails() - empty information
+        **********************************************************************/
+        String info = "...";
+        store.empty();
+        try {
+            store.addBeanBags(1, "", "", "123", (short)2016, (byte)02);
+            bag = store.findBeanBag("123");
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+
+        try {
+            info = store.getBeanBagDetails("123");   
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+
+        assert info == "" : "Incorrect description returned";
+        completeTest();
+
+        /*  .getBeanBagDetails() - valid
+        **********************************************************************/
+        bag.setInformation("TEST");
+
+        try {
+            info = store.getBeanBagDetails("123");   
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+
+        assert info == "TEST" : "Incorrect description returned";
+        completeTest();
+
+        /*  .getBeanBagDetails() - illegal ID
+        **********************************************************************/
+        try {
+            info = store.getBeanBagDetails("NOTHEX");
+            assert false : "IllegalIDException should have been thrown";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+        completeTest();
+
+        /*  .getBeanBagDetails() - bag not recognised
+        **********************************************************************/
+        try {
+            info = store.getBeanBagDetails("1234567890ABCDEF");
+            assert false :
+                "BeanBagIDNotRecognisedException should have been thrown";
+        }
+        catch (BeanBagIDNotRecognisedException err) {}
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception occurred";
+        }
+        completeTest();   
     }
 
     public static void TestBeanBags() {
