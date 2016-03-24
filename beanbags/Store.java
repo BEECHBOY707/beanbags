@@ -437,11 +437,7 @@ public class Store implements BeanBagStore, Serializable
     }
 
     public void empty() {
-        // Clear all objects from BeanBags object array list by iterating through list
-        for (int i=0; i < this.beanBags.size(); i++){
-            // Use ObjectArrayList method to remove the front element of the list each time
-            this.beanBags.remove(0);
-        }
+        this.beanBags = new ObjectArrayList();
     }
      
     public void resetSaleAndCostTracking() {
