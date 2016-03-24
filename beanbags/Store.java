@@ -123,25 +123,21 @@ public class Store implements BeanBagStore
 
     public void setBeanBagPrice(String id, int priceInPence) 
     throws InvalidPriceException, BeanBagIDNotRecognisedException, IllegalIDException {
-        if ( validateHex(id) ) { // Ensure ID is legal
-            if ( priceInPence >= 0 ) { // Ensure price is legal
-                try {
-                    // Check if a bean bag with this ID already exists
-                    BeanBag existingBag = this.findBeanBag(id);
-                    // Set price
-                    existingBag.setPrice(priceInPence);
-                }
-                catch (RuntimeException err) {
-                    throw new BeanBagIDNotRecognisedException();
-                }
-            }
-            else {
-                throw new InvalidPriceException();
-            }
-        }
-        else {
+
+        if (!validateHex(id)) {
             throw new IllegalIDException();
         }
+        if (priceInPence < 1) {
+            throw new InvalidPriceException();
+        }
+
+        BeanBag bag = this.findBeanBag(id);
+
+        if (bag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+
+        bag.setPrice(priceInPence);
     }
 
     /**
@@ -276,7 +272,7 @@ public class Store implements BeanBagStore
 
     public void sellBeanBags(int reservationNumber)
     throws ReservationNumberNotRecognisedException {
-        // Iterate all bean bags and try to unreserve
+        // Iterate all bean bags and try to sell
         for (int i=0; i < this.beanBags.size(); i++){
             BeanBag bag = (BeanBag) this.beanBags.get(i);
             if (bag.sellReservation(reservationNumber)) {
