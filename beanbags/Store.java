@@ -1,5 +1,11 @@
 package beanbags;
+
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 
 /**
@@ -8,7 +14,7 @@ import java.io.IOException;
  * @author Max Beech, Louis Haddrell 
  * @version 1.0
  */
-public class Store implements BeanBagStore
+public class Store implements BeanBagStore, Serializable
 {
     private ObjectArrayList beanBags;
     
@@ -320,10 +326,47 @@ public class Store implements BeanBagStore
         return existingBag.getStockCount();
     }
 
-    public void saveStoreContents(String filename) throws IOException { }
+    public void saveStoreContents(String filename) throws IOException {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(this);
+            objectOut.close();
+        }
+        catch (IOException err) {
+            err.printStackTrace();
+            throw err;
+        }
+    }
 
-    public void loadStoreContents(String filename) throws IOException,
-    ClassNotFoundException { }
+    public void loadStoreContents(String filename)
+    throws IOException, ClassNotFoundException {
+        Store loadedStore;
+
+        try {
+            FileInputStream fileInput = new FileInputStream(filename);
+            ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+            loadedStore = (Store) objectInput.readObject();
+            objectInput.close();
+        }
+        catch (IOException err){
+            err.printStackTrace();
+            throw err;
+        }
+        catch (ClassNotFoundException err){
+            err.printStackTrace();
+            throw err;
+        }
+
+        // Apply loaded beanbags array
+        this.empty();
+        ObjectArrayList loadedArray = loadedStore.getBeanBagsArray();
+
+        for (int i=0; i < loadedArray.size(); i++){
+            BeanBag beanbag = (BeanBag) loadedArray.get(i);
+            this.beanBags.add(beanbag);
+        }
+    }
 
     public int getNumberOfDifferentBeanBagsInStock() { 
         // Return the number of objects in ObjectArrayList, giving the number of different Bean Bags in stock

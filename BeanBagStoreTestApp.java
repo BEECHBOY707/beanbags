@@ -16,6 +16,8 @@ public class BeanBagStoreTestApp
     public static void main(String[] args) {
         TestStore();
         TestBeanBags();
+        TestReservation();
+        TestSerialisation();
         System.out.printf("\n%d tests completed", testCounter);
     }
 
@@ -582,5 +584,93 @@ public class BeanBagStoreTestApp
         /*  Test getValue()
         **********************************************************************/
         assert reservation.getValue() == 1000 : "Reservation value incorrect";
+        completeTest();
+    }
+
+    public static void TestSerialisation() {
+        /*  Create store
+        **********************************************************************/
+        Store store = new Store();
+        try {
+            store.addBeanBags(10, "", "", "0", (short)2016, (byte)02);
+            store.addBeanBags(20, "", "", "1", (short)2016, (byte)02);
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        assert store.getBeanBagsArray().size() == 2 : "Bags not added";
+        completeTest();
+
+        // Grab BeanBag object and apply price
+        BeanBag bag0 = store.findBeanBag("0");
+        BeanBag bag1 = store.findBeanBag("1");
+
+        bag0.setPrice(50);
+        bag1.setPrice(100);
+
+        /*  Make some sales and reservations
+        **********************************************************************/
+        try {
+            store.sellBeanBags(4, "0");
+            store.reserveBeanBags(1, "0");
+
+            store.sellBeanBags(10, "1");
+            store.reserveBeanBags(5, "1");
+        }
+        catch (Exception err) {
+            err.printStackTrace();
+            assert false : "Unexpected exception thrown";
+        }        
+
+        /*  Check
+        **********************************************************************/
+        assert bag0.getSoldCount() == 4;
+        assert bag0.getReservedCount() == 1;
+
+        assert bag1.getSoldCount() == 10;
+        assert bag1.getReservedCount() == 5;
+
+        /*  Serialise
+        **********************************************************************/
+        try {
+            store.saveStoreContents("output.ser");
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        /*  Empty
+        **********************************************************************/
+        store.empty();
+
+        /*  Load
+        **********************************************************************/
+        try {
+            store.loadStoreContents("output.ser");
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        /*  Check again
+        **********************************************************************/
+        bag0 = (BeanBag) store.getBeanBagsArray().get(0);
+        bag1 = (BeanBag) store.getBeanBagsArray().get(1);
+
+        assert bag0 != null : "Bag 0 is null";
+        assert bag1 != null : "Bag 1 is null";
+
+        bag0.setPrice(50);
+        bag1.setPrice(100);
+
+        assert bag0.getSoldCount() == 4;
+        assert bag0.getReservedCount() == 1;
+
+        assert bag1.getSoldCount() == 10;
+        assert bag1.getReservedCount() == 5;
     }
 }

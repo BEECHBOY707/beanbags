@@ -1,5 +1,6 @@
 package beanbags;
 
+import java.io.Serializable;
 
 /**
  * This BeanBag class contains details for every different BeanBag product, including its key specification, and any reservation or sold BeanBag information.
@@ -7,7 +8,7 @@ package beanbags;
  * @author Max Beech, Louis Haddrell
  * @version 1.0
  */
-public class BeanBag
+public class BeanBag implements Serializable
 {
     private static int totalReservations = 0;
 
@@ -57,6 +58,14 @@ public class BeanBag
 
     /*  Getters and Setters
     **************************************************************************/
+    public ObjectArrayList getReservations() {
+        return this.reservations;
+    }
+
+    public ObjectArrayList getSales() {
+        return this.sales;
+    }
+
     public byte getMonth() {
         return this.month;
     }

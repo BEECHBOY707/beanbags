@@ -1,6 +1,8 @@
 package beanbags;
 
-public class Sale
+import java.io.Serializable;
+
+public class Sale implements Serializable
 {
     private int priceInPence;
     private int quantity;
