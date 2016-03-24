@@ -652,14 +652,14 @@ public class BeanBagStoreTestApp
             store.loadStoreContents("output.ser");
         }
         catch (Exception err) {
-            System.out.println(err);
+            err.printStackTrace()
             assert false : "Unexpected exception thrown";
         }
 
         /*  Check again
         **********************************************************************/
-        bag0 = (BeanBag) store.getBeanBagsArray().get(0);
-        bag1 = (BeanBag) store.getBeanBagsArray().get(1);
+        bag0 = store.findBeanBag("0");
+        bag1 = store.findBeanBag("1");
 
         assert bag0 != null : "Bag 0 is null";
         assert bag1 != null : "Bag 1 is null";
