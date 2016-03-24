@@ -393,6 +393,66 @@ public class BeanBagStoreTestApp
         assert bag.getSoldCount() - oldSales == 1;
 
         completeTest();
+
+
+        /*  .setBeanBagPrice() - invalid hex
+        **********************************************************************/
+        try {
+            store.setBeanBagPrice("NOTHEX", 50);
+            assert false : "Setting price should have thrown error";
+        }
+        catch (IllegalIDException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
+
+
+        /*  .setBeanBagPrice() - unrecognised ID
+        **********************************************************************/
+        try {
+            store.setBeanBagPrice("11111", 50);
+            assert false : "Setting price should have thrown error";
+        }
+        catch (BeanBagIDNotRecognisedException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
+
+
+        /*  .setBeanBagPrice() - invalid price
+        **********************************************************************/
+        try {
+            store.setBeanBagPrice("123", 0);
+            assert false : "Setting price should have thrown error";
+        }
+        catch (InvalidPriceException err) {}
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        completeTest();
+
+
+        /*  .setBeanBagPrice() - valid
+        **********************************************************************/
+        try {
+            store.setBeanBagPrice("123", 1000);
+        }
+        catch (Exception err) {
+            System.out.println(err);
+            assert false : "Unexpected exception thrown";
+        }
+
+        assert bag.getPrice() == 1000 : "Bag price was not set properly";
+
+        completeTest();  
     }
 
     public static void TestBeanBags() {
