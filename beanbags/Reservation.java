@@ -2,6 +2,11 @@ package beanbags;
 
 import java.io.Serializable;
 
+/**
+ * Simple structure for storing a reservation receipt
+ * 
+ * @author Louis Haddrell 
+ */
 public class Reservation implements Serializable
 {
     private int id;
@@ -14,20 +19,28 @@ public class Reservation implements Serializable
         this.quantity = quantity;
     }
 
-    /*  Getters and Setters
-    **************************************************************************/
+    /**
+     *  @return     reservation unique identification number
+     */
     public int getID() {
         return this.id;
     }
 
+    /**
+     *  @return     price the bean bag was reserved at
+     */
     public int getPrice() {
         return this.priceInPence;
     }
 
-    public int getQuantity() {
-        return this.quantity;
-    }
-
+    /**
+     *  Update the price of the reservation
+     *  
+     *  Bean bag reservations have a lowest-price guarantee so only modify
+     *  the price if it is now lower than the previous lowest price
+     *
+     *  @param value    new price to apply
+     */
     public void setPrice(int value) {
         if (value < this.priceInPence) {
             this.priceInPence = value;
@@ -35,8 +48,15 @@ public class Reservation implements Serializable
     }
 
     /**
-     *  Calculate value of reservation
-    */
+     *  @return     quantity of bean bags reserved
+     */
+    public int getQuantity() {
+        return this.quantity;
+    }
+
+    /**
+     *  @return     Calculated total value of this reservation
+     */
     public int getValue() {
         return this.priceInPence * this.quantity;
     }

@@ -6,7 +6,6 @@ import beanbags.*; /* want all the exceptions, the interface and
  * Test suite
  *
  * @author Louis Haddrell
- * @version 1.0
  */
 
 public class BeanBagStoreTestApp
