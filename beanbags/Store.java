@@ -227,19 +227,52 @@ public class Store implements BeanBagStore
     public void sellBeanBags(int reservationNumber)
     throws ReservationNumberNotRecognisedException { }
 
-    public int beanBagsInStock() { return 0; }
+    public int beanBagsInStock() { 
+        int beanBagsInStockCount = 0;
+        // Iterate all bean bags and add the number of them to variable
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            beanBagsInStockCount = beanBagsInStockCount + bag.getStockCount();
+        }
+        // Return the total number of BeanBags in stock after iteration
+        return beanBagsInStockCount;
+    }
 
-    public int reservedBeanBagsInStock() { return 0; }
+    public int reservedBeanBagsInStock() { 
+    int reservedBeanBagsInStockCount = 0;
+        // Iterate all bean bags and add the number that si reserved to variable
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag bag = (BeanBag) this.beanBags.get(i);
+            reservedBeanBagsInStockCount = reservedBeanBagsInStockCount + bag.getReservedCount();
+        }
+        // Return the total number of reserved BeanBags in stock after iteration
+        return reservedBeanBagsInStockCount;
+    }
 
     public int beanBagsInStock(String id) throws BeanBagIDNotRecognisedException,
-    IllegalIDException { return 0; }
+    IllegalIDException { 
+        // Validate that the ID provided is valid
+        if (!this.validateHex(id)) {
+            throw new IllegalIDException();
+        }
+        BeanBag existingBag = this.findBeanBag(id);
+        // If no BeanBag by that ID was found, raise exception
+        if (existingBag == null) {
+            throw new BeanBagIDNotRecognisedException();
+        }
+        // Return the total number of BeanBags of a given BeanBag type
+        return existingBag.getStockCount();
+    }
 
     public void saveStoreContents(String filename) throws IOException { }
 
     public void loadStoreContents(String filename) throws IOException,
     ClassNotFoundException { }
 
-    public int getNumberOfDifferentBeanBagsInStock() { return 0; }
+    public int getNumberOfDifferentBeanBagsInStock() { 
+        // Return the number of objects in ObjectArrayList, giving the number of different Bean Bags in stock
+        return this.beanBags.size();
+    }
 
     public int getNumberOfSoldBeanBags() { return 0; }
 

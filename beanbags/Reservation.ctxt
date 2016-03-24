@@ -1,4 +1,11 @@
 #BlueJ class context
-comment0.params=priceInPence\ quantity
-comment0.target=Reservation(int,\ int)
-numComments=1
+comment0.params=id\ priceInPence\ quantity
+comment0.target=Reservation(int,\ int,\ int)
+comment1.params=
+comment1.target=int\ getID()
+comment1.text=\ \ Getters\ and\ Setters\n
+comment2.params=
+comment2.target=int\ getPrice()
+comment3.params=
+comment3.target=int\ getQuantity()
+numComments=4
