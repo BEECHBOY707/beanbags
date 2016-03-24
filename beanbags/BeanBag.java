@@ -75,6 +75,11 @@ public class BeanBag implements Serializable
 
     public void setPrice(int value) {
         this.priceInPence = value;
+
+        for (int i=0; i < this.reservations.size(); i++){
+            Reservation reservation = (Reservation) this.reservations.get(i);
+            reservation.setPrice(value);
+        }       
     }
 
     public int getStockCount() {
@@ -171,17 +176,20 @@ public class BeanBag implements Serializable
     }
 
     public void sell(int quantity) {
-        Sale sale = new Sale(this.priceInPence, quantity);
-        this.soldValue += this.priceInPence * quantity;
+        this.sell(this.priceInPence, quantity);
+    }
+
+    private void sell(int price, int quantity) {
         this.stockCount -= quantity;
         this.soldCount += quantity;
+        this.soldValue += price * quantity;        
     }
 
     public Boolean sellReservation(int reservationID) {
         for (int i=0; i < this.reservations.size(); i++){
             Reservation reservation = (Reservation) this.reservations.get(i);
             if (reservation.getID() == reservationID) {
-                this.sell(reservation.getQuantity());
+                this.sell(reservation.getPrice(), reservation.getQuantity());
                 this.reservedCount -= reservation.getQuantity();
                 this.reservations.remove(reservation);                
                 return true;

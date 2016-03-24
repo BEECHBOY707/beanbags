@@ -527,13 +527,14 @@ public class BeanBagStoreTestApp
 
         /*  Test Sell
         **********************************************************************/
-        int available = bag.availableCount();        
-        int sold = bag.getSoldCount();
-        
+        bag.empty();
+        bag.setStockCount(5);
+        bag.setPrice(10);
         bag.sell(1);
         
-        assert bag.availableCount() == available-1;
-        assert bag.getSoldCount() == sold+1;
+        assert bag.availableCount() == 4;
+        assert bag.getSoldCount() == 1;
+        assert bag.getSoldValue() == 10;
 
         completeTest();
 
@@ -568,6 +569,14 @@ public class BeanBagStoreTestApp
         bag.reserve(4);
 
         assert bag.getReservationValue() == 40 : "Reservation price incorrect";
+
+
+        /*  Test Reservation Pricing
+        **********************************************************************/
+        bag.setPrice(15);
+        assert bag.getReservationValue() == 40 : "Reservation price has increased";
+        bag.setPrice(5);
+        assert bag.getReservationValue() == 20 : "Reservation price has not decreased";
     }
 
     public static void TestReservation() {
@@ -584,6 +593,20 @@ public class BeanBagStoreTestApp
         /*  Test getValue()
         **********************************************************************/
         assert reservation.getValue() == 1000 : "Reservation value incorrect";
+        completeTest();
+
+
+        /*  Test updatePrice() - lower price
+        **********************************************************************/
+        reservation.setPrice(100);
+        assert reservation.getPrice() == 100;
+        completeTest();
+
+
+        /*  Test updatePrice() - higher price
+        **********************************************************************/
+        reservation.setPrice(500);
+        assert reservation.getPrice() == 100;
         completeTest();
     }
 

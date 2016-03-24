@@ -28,6 +28,12 @@ public class Reservation implements Serializable
         return this.quantity;
     }
 
+    public void setPrice(int value) {
+        if (value < this.priceInPence) {
+            this.priceInPence = value;
+        }
+    }
+
     /**
      *  Calculate value of reservation
     */
