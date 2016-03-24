@@ -167,10 +167,15 @@ public class BeanBag implements Serializable
 
     /*  Methods
     **************************************************************************/
+    public void reset() {
+        this.soldCount = 0;
+        this.soldValue = 0;
+    }
+
     public void empty() {
+        reset();
         this.priceInPence = -1;
         this.reservedCount = 0;
-        this.soldCount = 0;
         this.stockCount = 0;
         this.reservations = new ObjectArrayList();
     }

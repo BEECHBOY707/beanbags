@@ -444,7 +444,12 @@ public class Store implements BeanBagStore, Serializable
         }
     }
      
-    public void resetSaleAndCostTracking() { }
+    public void resetSaleAndCostTracking() {
+        for (int i=0; i < this.beanBags.size(); i++){
+            BeanBag beanbag = (BeanBag) this.beanBags.get(i);
+            beanbag.reset();
+        }        
+    }
      
     public void replace(String oldId, String replacementId) 
     throws BeanBagIDNotRecognisedException, IllegalIDException {

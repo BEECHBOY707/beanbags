@@ -552,13 +552,22 @@ public class BeanBagStoreTestApp
         completeTest();
 
 
+        /* Test Reset
+        **********************************************************************/
+        bag.reset();
+        assert bag.getSoldCount() == 0;
+        assert bag.getSoldValue() == 0;
+
+
         /* Test Empty
         **********************************************************************/
         bag.empty();
+        assert bag.getSoldCount() == 0;
+        assert bag.getSoldValue() == 0;
         assert bag.getPrice() == -1;
         assert bag.getReservedCount() == 0;
-        assert bag.getSoldCount() == 0;
         assert bag.getStockCount() == 0;
+        assert bag.getReservations().size() == 0;
 
 
         /*  Test Get Reservation Value
