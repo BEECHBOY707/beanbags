@@ -44,7 +44,6 @@ public class Store implements BeanBagStore, Serializable
             BeanBag bag = (BeanBag) this.beanBags.get(i);
 
             if (bag.getId().equals(id)) {
-                System.out.print("Returning bag!");
                 return bag;
             }
         }
